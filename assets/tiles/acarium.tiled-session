@@ -1,0 +1,25 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "ocean.tsx": {
+            "dynamicWrapping": true
+        }
+    },
+    "map.height": 69,
+    "map.lastUsedFormat": "tmx",
+    "map.width": 120,
+    "openFiles": [
+    ],
+    "project": "acarium.tiled-project",
+    "recentFiles": [
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.type": 1
+}

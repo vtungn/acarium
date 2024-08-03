@@ -20,14 +20,14 @@ class Tank extends World {
 
   _generateFish() {
     var rnd = math.Random();
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 20; i++) {
       final fish = Fish(
-        // fruit: spawnPoint.name,
-        position: Vector2(rnd.nextDouble() * 3000, rnd.nextDouble() * 2000),
+        position: Vector2(rnd.nextDouble() * 2500, rnd.nextDouble() * 1500),
         direction: rnd.nextDouble() * 360,
-        // direction: 180,
-        // size: Vector2(spawnPoint.width, spawnPoint.height),
+        scaleFactor: rnd.nextDouble() * 0.5,
       );
+      // const math.Point(1,  2).magnitude;
+      // Vector2.all(2).mag
       add(fish);
     }
   }

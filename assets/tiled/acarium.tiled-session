@@ -1,0 +1,29 @@
+{
+    "activeFile": "ocean.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "ocean.tmx": {
+            "scale": 0.1699609375,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 1732.7510917030568,
+                "y": 1450.3332567225925
+            }
+        },
+        "ocean.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "openFiles": [
+        "ocean.tsx",
+        "ocean.tmx"
+    ],
+    "recentFiles": [
+        "ocean.tsx",
+        "ocean.tmx"
+    ]
+}

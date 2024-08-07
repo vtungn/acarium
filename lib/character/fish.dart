@@ -7,37 +7,39 @@ import 'package:flame/components.dart';
 
 enum FishType { fish1, fish2 }
 
-class Fish extends SpriteGroupComponent
+class Fish extends SpriteComponent
     with HasGameRef<Acarium>, CollisionCallbacks {
   double accumulateTime = 0;
   double fixedDeltaTime = 1 / 60;
   Vector2 velocity = Vector2.zero();
   double direction = 0.0;
+  Vector2 directionVector;
   double horizontalMovement = 1;
-  double moveSpeed = 100;
+  double moveSpeed = 500;
   double scaleFactor = 1;
-  double separationRadius = 1000;
+  double separationRadius = 600;
   double updateDirection = 0;
-  Vector2 updateDirection2 = Vector2.zero();
+  Vector2 steerFactor = Vector2.zero();
 
-  Fish({required position, required this.direction, required this.scaleFactor})
+  Fish(
+      {required position,
+      required this.directionVector,
+      required this.scaleFactor})
       : super(position: position);
 
   @override
   FutureOr<void> onLoad() {
-    final sprite = Sprite(game.images.fromCache('fish1.png'));
-    scale = Vector2.all(0.2);
-    // scale = 0.2;
-    sprites = {
-      FishType.fish1: sprite,
-    };
-    current = FishType.fish1;
-    if (direction >= 90 && direction <= 270) {
-      flipVertically();
-    }
-    updateDirection = direction;
-    // anchor = Anchor.topCenter;
-    transform.angleDegrees = direction;
+    sprite = Sprite(game.images.fromCache('fish1.png'));
+    scale = Vector2.all(2);
+
+    // if (direction >= 90 && direction <= 270) {
+    //   flipVertically();
+    // }
+    anchor = Anchor.center;
+    // transform.angle = -math.atan2(directionVector.x, directionVector.y);
+
+    // transform.angleDegrees = direction;
+    // updateDirection = transform.angle;
     add(CircleHitbox(
       radius: separationRadius,
       anchor: Anchor.center,
@@ -45,16 +47,7 @@ class Fish extends SpriteGroupComponent
       collisionType: CollisionType.active,
       // anchor: Anchor.center,
     ));
-    // add(RectangleHitbox(position: Vector2(10, 10), size: Vector2(10, 10)));
-    //   radius: 2,
-    //   position: Vector2.all(100),
-    //   // isSolid: true,
-    //   collisionType: CollisionType.active,
-    // ));
-    // debugMode = true;
-    // add(CircleComponent(
-    //     radius: 100, position: Vector2.all(100), anchor: Anchor.center));
-    // add(CircleHitbox(radius: 100, position: Vector2.all(100)));
+
     return super.onLoad();
   }
 
@@ -70,25 +63,62 @@ class Fish extends SpriteGroupComponent
   }
 
   @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    final lineBtw = position - other.position;
-    final ratio =
-        (math.Point(lineBtw.x, lineBtw.y).magnitude / separationRadius)
-            .clamp(0, 1)
-            .toDouble();
-    updateDirection2 -= lineBtw * ratio;
-    // updateDirection2 = updateDirection2.normalized();
-    updateDirection = updateDirection2.angleTo(Vector2(1, 0));
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints, PositionComponent other) {
+    // if (other is TankComponent) {
+    //   print('hit');
+    //   updateDirection = transform.angle + math.pi / 2;
+    // }
+    super.onCollisionStart(intersectionPoints, other);
+  }
 
-    super.onCollision(intersectionPoints, other);
+  Vector2 separation(List<PositionComponent> boids,
+      {double minDistance = 500}) {
+    var separation = Vector2.zero();
+    for (var boid in boids) {
+      var lineBtw = position - boid.position;
+      final distance = math.Point(lineBtw.x, lineBtw.y).magnitude;
+      lineBtw = lineBtw.normalized();
+      if (distance < minDistance && distance != 0) {
+        // print(distance);
+        final ratio = (distance / separationRadius).clamp(0, 0.05).toDouble();
+        // here the vector2
+        separation += lineBtw * ratio;
+        // separation += lineBtw * 0.01;
+        // separation
+        // print(separation);
+        // updateDirection = separation.angleTo(Vector2(1, 0));
+      }
+    }
+    // separation = separation.normalized();
+    // final newDirection = velocity + separation;
+    // separation = separation.normalized();
+    // print(separation);
+    final newDirection = directionVector + separation;
+    directionVector = newDirection.normalized();
+
+    // print(velocity.angleTo(Vector2(1, 0)));
+    // print(updateDirection);
+    // print(velocity);
+    // updateDirection = velocity.angleTo(Vector2(1, 0));
+    return separation;
   }
 
   _onMove(double dt) {
-    transform.angle = updateDirection;
-    velocity.x = ((moveSpeed) * (math.cos(transform.angle)));
-    velocity.y = ((moveSpeed) * (math.sin(transform.angle)));
-    position.x -= velocity.x * dt;
-    position.y -= velocity.y * dt;
+    // transform.angleDegrees = 45;
+    // print(math.atan2(1, 1));
+    // print(transform.angle);
+    // print(math.pi / 4);
+    // transform.angle = updateDirection;
+    // print(transform.angle);
+    // velocity.x = ((moveSpeed) * (math.cos(transform.angle)));
+    // velocity.y = ((moveSpeed) * (math.sin(transform.angle)));
+    velocity.x = ((moveSpeed) * directionVector.x);
+    velocity.y = ((moveSpeed) * directionVector.y);
+    transform.angle = math.atan2(velocity.y, velocity.x);
+    position.x += velocity.x * dt;
+    position.y += velocity.y * dt;
+    // print(velocity.angleTo(Vector2(1, 0)));
     // position.y += velocity.y * dt * transform.angle;
     // position.y += velocity.y * dt;
   }

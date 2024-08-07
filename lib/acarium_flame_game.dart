@@ -17,6 +17,7 @@ class Acarium extends FlameGame with HasCollisionDetection {
   FutureOr<void> onLoad() async {
     await images.loadAllImages();
     Tank world = Tank();
+    add(ScreenHitbox());
 
     cam = CameraComponent.withFixedResolution(
         world: world, width: tvWidth, height: tvHeight);

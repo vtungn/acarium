@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:carium/acarium_flame_game.dart';
+import 'package:carium/config/constants.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
@@ -77,49 +78,87 @@ class Fish extends SpriteComponent
     var separation = Vector2.zero();
     for (var boid in boids) {
       var lineBtw = position - boid.position;
-      final distance = math.Point(lineBtw.x, lineBtw.y).magnitude;
+      // final distance = math.Point(lineBtw.x, lineBtw.y).magnitude;
+      final distance = position.distanceTo(boid.position);
       lineBtw = lineBtw.normalized();
-      if (distance < minDistance && distance != 0) {
-        // print(distance);
-        final ratio = (distance / separationRadius).clamp(0, 0.05).toDouble();
+      if (distance < minDistance && distance > 0) {
+        // final ratio = (distance / separationRadius).clamp(0, 0.05).toDouble();
         // here the vector2
-        separation += lineBtw * ratio;
-        // separation += lineBtw * 0.01;
-        // separation
-        // print(separation);
-        // updateDirection = separation.angleTo(Vector2(1, 0));
+        // separation += lineBtw * ratio;
+        lineBtw /= distance;
+        separation.add(lineBtw);
       }
     }
-    // separation = separation.normalized();
-    // final newDirection = velocity + separation;
-    // separation = separation.normalized();
-    // print(separation);
+    separation.normalize();
+    separation *= moveSpeed;
+    separation -= velocity;
+    separation.scaleTo(separationForce);
     final newDirection = directionVector + separation;
     directionVector = newDirection.normalized();
-
-    // print(velocity.angleTo(Vector2(1, 0)));
-    // print(updateDirection);
-    // print(velocity);
-    // updateDirection = velocity.angleTo(Vector2(1, 0));
     return separation;
   }
 
+  Vector2 cohesion(List<PositionComponent> boids) {
+    Vector2 sum = Vector2.zero();
+    for (var other in boids) {
+      double d = position.distanceTo(other.position);
+      if ((d > 0) && (d < neighborDist)) {
+        sum.add(other.position);
+      }
+    }
+    sum.normalize();
+    sum.scaleTo(cohesionForce);
+    final newDirection = directionVector + sum;
+    directionVector = newDirection.normalized();
+    return sum;
+  }
+
+  Vector2 alignment(List<PositionComponent> boids) {
+    Vector2 sum = Vector2.zero();
+    double count = 0.0;
+    for (var (other as Fish) in boids) {
+      double d = position.distanceTo(other.position);
+      if ((d > 0) && (d < neighborDist)) {
+        sum += other.velocity;
+        count++;
+      }
+    }
+    if (count > 0) {
+      sum /= count;
+      sum.normalize();
+      sum *= moveSpeed;
+      Vector2 steer = sum - velocity;
+      steer.scaleTo(alignmentForce);
+
+      final newDirection = directionVector + steer;
+      directionVector = newDirection.normalized();
+    }
+    return sum;
+  }
+
+  _tankBoundary() {
+    const turnFactor = 1000;
+
+    if (position.x < tankBoundaryMargin) {
+      velocity.x += turnFactor;
+    }
+    if (position.x > tvWidth - tankBoundaryMargin) {
+      velocity.x -= turnFactor;
+    }
+    if (position.y < tankBoundaryMargin) {
+      velocity.y += turnFactor;
+    }
+    if (position.y > tvHeight - tankBoundaryMargin) {
+      velocity.y -= turnFactor;
+    }
+  }
+
   _onMove(double dt) {
-    // transform.angleDegrees = 45;
-    // print(math.atan2(1, 1));
-    // print(transform.angle);
-    // print(math.pi / 4);
-    // transform.angle = updateDirection;
-    // print(transform.angle);
-    // velocity.x = ((moveSpeed) * (math.cos(transform.angle)));
-    // velocity.y = ((moveSpeed) * (math.sin(transform.angle)));
     velocity.x = ((moveSpeed) * directionVector.x);
     velocity.y = ((moveSpeed) * directionVector.y);
     transform.angle = math.atan2(velocity.y, velocity.x);
+    _tankBoundary();
     position.x += velocity.x * dt;
     position.y += velocity.y * dt;
-    // print(velocity.angleTo(Vector2(1, 0)));
-    // position.y += velocity.y * dt * transform.angle;
-    // position.y += velocity.y * dt;
   }
 }

@@ -10,7 +10,7 @@ import 'package:flame/components.dart';
 class FishBoid<T extends Fish> extends PositionComponent
     with HasGameRef<Acarium>, CollisionCallbacks {
   final int boidNumber;
-  final double avoidDistance = 500;
+
   List<PositionComponent> fishBoid = [];
 
   FishBoid(
@@ -36,6 +36,7 @@ class FishBoid<T extends Fish> extends PositionComponent
       fishBoid.add(fish);
       // children.add(T);
     }
+
     return super.onLoad();
   }
 
@@ -44,7 +45,9 @@ class FishBoid<T extends Fish> extends PositionComponent
     for (var i = 0; i < fishBoid.length; i++) {
       var boid = fishBoid[i];
       if (boid is Fish) {
-        boid.separation(fishBoid, minDistance: avoidDistance);
+        boid.separation(fishBoid, minDistance: neighborDist);
+        boid.alignment(fishBoid);
+        boid.cohesion(fishBoid);
       }
     }
     super.update(dt);

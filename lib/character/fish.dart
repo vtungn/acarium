@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:carium/acarium_flame_game.dart';
+import 'package:carium/character/seaweed.dart';
 import 'package:carium/config/constants.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -11,16 +12,20 @@ enum FishType { fish1, fish2 }
 class Fish extends SpriteComponent
     with HasGameRef<Acarium>, CollisionCallbacks {
   double accumulateTime = 0;
-  double fixedDeltaTime = 1 / 60;
+  final fixedDeltaTime = 1 / 60;
+  final hungerDeltaTime = 0.1;
+  double accHungerTime = 0;
+  final eatDeltaTime = 10000;
+  double accEatTime = 0;
   Vector2 velocity = Vector2.zero();
   double direction = 0.0;
   Vector2 directionVector;
-  double horizontalMovement = 1;
-  double moveSpeed = 500;
+  double moveSpeed = 900;
   double scaleFactor = 1;
   double separationRadius = 600;
   double updateDirection = 0;
   Vector2 steerFactor = Vector2.zero();
+  double hunger = 100;
 
   Fish(
       {required position,
@@ -31,24 +36,11 @@ class Fish extends SpriteComponent
   @override
   FutureOr<void> onLoad() {
     sprite = Sprite(game.images.fromCache('fish1.png'));
-    scale = Vector2.all(2);
+    scale = Vector2.all(scaleFactor);
 
-    // if (direction >= 90 && direction <= 270) {
-    //   flipVertically();
-    // }
     anchor = Anchor.center;
-    // transform.angle = -math.atan2(directionVector.x, directionVector.y);
 
-    // transform.angleDegrees = direction;
-    // updateDirection = transform.angle;
-    add(CircleHitbox(
-      radius: separationRadius,
-      anchor: Anchor.center,
-      position: Vector2(size.x / 2, size.y / 2),
-      collisionType: CollisionType.active,
-      // anchor: Anchor.center,
-    ));
-
+    add(RectangleHitbox());
     return super.onLoad();
   }
 
@@ -59,18 +51,16 @@ class Fish extends SpriteComponent
       _onMove(dt);
       accumulateTime -= fixedDeltaTime;
     }
-
+    hungerDrain(dt);
     super.update(dt);
   }
 
   @override
-  void onCollisionStart(
-      Set<Vector2> intersectionPoints, PositionComponent other) {
-    // if (other is TankComponent) {
-    //   print('hit');
-    //   updateDirection = transform.angle + math.pi / 2;
-    // }
-    super.onCollisionStart(intersectionPoints, other);
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    if (other is Seaweed) {
+      eatFood(other);
+    }
+    super.onCollision(intersectionPoints, other);
   }
 
   Vector2 separation(List<PositionComponent> boids,
@@ -137,19 +127,22 @@ class Fish extends SpriteComponent
   }
 
   _tankBoundary() {
-    const turnFactor = 1000;
-
     if (position.x < tankBoundaryMargin) {
-      velocity.x += turnFactor;
+      // velocity.x += turnFactor;
+      final newDirection = directionVector + Vector2(1, 0);
+      directionVector = newDirection.normalized();
     }
     if (position.x > tvWidth - tankBoundaryMargin) {
-      velocity.x -= turnFactor;
+      final newDirection = directionVector + Vector2(-1, 0);
+      directionVector = newDirection.normalized();
     }
     if (position.y < tankBoundaryMargin) {
-      velocity.y += turnFactor;
+      final newDirection = directionVector + Vector2(0, 1);
+      directionVector = newDirection.normalized();
     }
     if (position.y > tvHeight - tankBoundaryMargin) {
-      velocity.y -= turnFactor;
+      final newDirection = directionVector + Vector2(0, -1);
+      directionVector = newDirection.normalized();
     }
   }
 
@@ -160,5 +153,51 @@ class Fish extends SpriteComponent
     _tankBoundary();
     position.x += velocity.x * dt;
     position.y += velocity.y * dt;
+  }
+
+  Vector2 seekFood(List<PositionComponent> weeds) {
+    Vector2 sum = Vector2.zero();
+    final other = weeds[0];
+    if (other is Seaweed) {
+      // print(other.absolutePosition);
+      final lineBtw = other.position - position;
+      // double d = math.Point(lineBtw.x, lineBtw.y).magnitude;
+      // if (d > 0) {
+      //   sum.add(lineBtw);
+      // }
+      final newDirection = lineBtw;
+      directionVector = newDirection.normalized();
+    }
+
+    // Vector2 steer = sum + velocity;
+    // sum.x < 0 ? directionVector + sum : directionVector - sum;
+    return sum;
+  }
+
+  hungerDrain(double dt) {
+    accHungerTime += dt;
+    while (accHungerTime >= hungerDeltaTime) {
+      hunger--;
+      accHungerTime -= hungerDeltaTime;
+      if (hunger < -20) {
+        death();
+      }
+    }
+  }
+
+  eatFood(Seaweed weed) {
+    // accHungerTime++;
+    while (accHungerTime >= (hungerDeltaTime / 3)) {
+      if (hunger <= 100) {
+        weed.gotEaten();
+        hunger++;
+      }
+      // accHungerTime -= hungerDeltaTime;
+    }
+  }
+
+  death() {
+    print('isDeath');
+    removeFromParent();
   }
 }

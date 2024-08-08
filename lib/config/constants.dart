@@ -4,4 +4,4 @@ const separationForce = 0.1;
 const neighborDist = 500.0;
 const alignmentForce = 0.1;
 const cohesionForce = 0.01;
-const tankBoundaryMargin = 200;
+const tankBoundaryMargin = -200;

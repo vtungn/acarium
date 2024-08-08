@@ -10,7 +10,7 @@ class Tank extends World {
 
   @override
   FutureOr<void> onLoad() async {
-    add(FishBoid<Fish>(boidNumber: 30));
+    add(FishBoid<Fish>(boidNumber: 10));
     return super.onLoad();
   }
 }

@@ -153,6 +153,11 @@ class Fish extends SpriteComponent
     _tankBoundary();
     position.x += velocity.x * dt;
     position.y += velocity.y * dt;
+    if (velocity.x < 0 && !isFlippedVertically) {
+      flipVertically();
+    } else if (velocity.x > 0 && isFlippedVertically) {
+      flipVertically();
+    }
   }
 
   Vector2 seekFood(List<PositionComponent> weeds) {
@@ -165,6 +170,7 @@ class Fish extends SpriteComponent
       // if (d > 0) {
       //   sum.add(lineBtw);
       // }
+      lineBtw.normalize();
       final newDirection = lineBtw;
       directionVector = newDirection.normalized();
     }
@@ -186,14 +192,7 @@ class Fish extends SpriteComponent
   }
 
   eatFood(Seaweed weed) {
-    // accHungerTime++;
-    while (accHungerTime >= (hungerDeltaTime / 3)) {
-      if (hunger <= 100) {
-        weed.gotEaten();
-        hunger++;
-      }
-      // accHungerTime -= hungerDeltaTime;
-    }
+    hunger++;
   }
 
   death() {

@@ -5,7 +5,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
 class Shark extends SpriteAnimationGroupComponent
-    with HasGameRef<Acarium>, CollisionCallbacks {
+    with HasGameReference<Acarium>, CollisionCallbacks {
   double accumulateTime = 0;
   double fixedDeltaTime = 1 / 60;
   Vector2 velocity = Vector2.zero();

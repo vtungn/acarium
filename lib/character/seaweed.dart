@@ -20,16 +20,16 @@ class Seaweed extends SpriteComponent
 
   @override
   void update(double dt) {
-    accGenerateTime += dt;
-    while (accGenerateTime >= generateRate) {
-      if (capacity <= 100) {
-        capacity++;
-      }
-      if (capacity < -10) {
-        removeFromParent();
-      }
-      accGenerateTime -= generateRate;
-    }
+    // accGenerateTime += dt;
+    // while (accGenerateTime >= generateRate) {
+    //   if (capacity <= 100) {
+    //     capacity++;
+    //   }
+    //   // if (capacity < -10) {
+    //   //   removeFromParent();
+    //   // }
+    //   accGenerateTime -= generateRate;
+    // }
     super.update(dt);
   }
 

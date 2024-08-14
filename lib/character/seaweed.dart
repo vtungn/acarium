@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:carium/acarium_flame_game.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 
 class Seaweed extends SpriteComponent
-    with HasGameRef<Acarium>, CollisionCallbacks {
+    with HasGameRef<Acarium>, CollisionCallbacks, DragCallbacks {
   double accGenerateTime = 0;
   final generateRate = 1;
   double capacity = 100;
@@ -35,5 +36,11 @@ class Seaweed extends SpriteComponent
 
   void gotEaten() {
     capacity--;
+  }
+
+  @override
+  void onDragUpdate(DragUpdateEvent event) {
+    position = event.deviceEndPosition;
+    super.onDragUpdate(event);
   }
 }

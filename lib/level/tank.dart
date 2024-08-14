@@ -7,7 +7,7 @@ import 'package:flame/components.dart';
 class Tank extends World {
   @override
   FutureOr<void> onLoad() async {
-    add(FishBoid<Fish>(boidNumber: 10));
+    add(FishBoid<Fish>(boidNumber: 30));
     return super.onLoad();
   }
 }

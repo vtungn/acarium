@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:carium/acarium_flame_game.dart';
 import 'package:carium/character/fish.dart';
 import 'package:carium/character/seaweed.dart';
+import 'package:carium/character/shark.dart';
 import 'package:carium/config/constants.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -14,6 +15,7 @@ class FishBoid<T extends Fish> extends PositionComponent
 
   List<PositionComponent> fishBoid = [];
   List<PositionComponent> weed = [];
+  List<PositionComponent> shark = [];
 
   FishBoid(
       {super.children, super.priority, super.key, required this.boidNumber});
@@ -23,8 +25,11 @@ class FishBoid<T extends Fish> extends PositionComponent
         Seaweed(position: Vector2(tvWidth / 2 + 10, tvHeight / 2 + 20));
     add(weed1);
     weed.add(weed1);
+    final shark1 = Shark();
+    add(shark1);
+    shark.add(shark1);
     var rnd = math.Random();
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < boidNumber; i++) {
       final fish = Fish(
         position:
             Vector2(rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),

@@ -15,11 +15,11 @@ class FishComponent extends SpriteComponent
     with HasGameRef<Acarium>, CollisionCallbacks {
   final Fish fish;
   double accumulateTime = 0;
+  double accEatTime = 0;
+  double accHungerTime = 0;
   final fixedDeltaTime = 1 / 60;
   final hungerDeltaTime = 0.1;
-  double accHungerTime = 0;
-  final eatDeltaTime = 10000;
-  double accEatTime = 0;
+  final eatDeltaTime = 0.2;
   Vector2 velocity = Vector2.zero();
   double direction = 0.0;
   Vector2 directionVector;
@@ -29,6 +29,8 @@ class FishComponent extends SpriteComponent
   double updateDirection = 0;
   Vector2 steerFactor = Vector2.zero();
   double hunger = 100;
+
+  bool eatFactor = false;
 
   FishComponent(
       {required this.fish,
@@ -51,6 +53,9 @@ class FishComponent extends SpriteComponent
   @override
   void update(double dt) {
     accumulateTime += dt;
+    accEatTime += dt;
+
+    eatFactor = false;
     while (accumulateTime >= fixedDeltaTime) {
       _onMove(dt);
       accumulateTime -= fixedDeltaTime;
@@ -64,9 +69,16 @@ class FishComponent extends SpriteComponent
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is Seaweed) {
-      eatFood(other);
+    accEatTime += 0.001;
+    while (accEatTime >= eatDeltaTime) {
+      if (other is Seaweed) {
+        eatFood();
+        other.gotEaten();
+      }
+      // eatFactor = true;
+      accEatTime -= eatDeltaTime / 3;
     }
+
     super.onCollision(intersectionPoints, other);
   }
 
@@ -80,9 +92,6 @@ class FishComponent extends SpriteComponent
       final distance = position.distanceTo(boid.position);
       lineBtw = lineBtw.normalized();
       if (distance < minDistance && distance > 0) {
-        // final ratio = (distance / separationRadius).clamp(0, 0.05).toDouble();
-        // here the vector2
-        // separation += lineBtw * ratio;
         lineBtw /= distance;
         separation.add(lineBtw);
       }
@@ -200,8 +209,8 @@ class FishComponent extends SpriteComponent
     }
   }
 
-  eatFood(Seaweed weed) {
-    hunger++;
+  eatFood() {
+    hunger += 5;
   }
 
   death() {

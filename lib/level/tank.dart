@@ -1,35 +1,37 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:carium/bloc/scoring/scoring_resource_bloc.dart';
 import 'package:carium/character/fish.dart';
 import 'package:carium/config/constants.dart';
 import 'package:flame/components.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 
 import '../character/seaweed.dart';
 import '../domain/index.dart';
 
-class Tank extends World {
+class Tank extends World
+    with FlameBlocListenable<ScoringResourceBloc, ScoringResourceState> {
   @override
   FutureOr<void> onLoad() async {
     background();
     staticObjFar();
     fishLayerFar();
     staticObjNear();
+    fishLayerNear();
     return super.onLoad();
   }
 
   void background() {}
-  void staticObjFar() {
-    add(
-      Seaweed(
-          seaweed:
-              Seaweed1(position: Vector2(tvWidth / 2 + 10, tvHeight / 2 + 20))),
-    );
+  void staticObjFar() async {
+    add(Seaweed(
+        seaweed:
+            Seaweed1(position: Vector2(tvWidth / 2 + 10, tvHeight / 2 + 20))));
   }
 
   void fishLayerFar() {
     var rnd = math.Random();
-    for (var i = 0; i < 30; i++) {
+    for (var i = 0; i < 5; i++) {
       final fish = FishComponent(
         fish: Smallfish1(),
         position:

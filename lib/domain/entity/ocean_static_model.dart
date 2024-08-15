@@ -3,13 +3,17 @@ import 'package:flame/components.dart';
 
 sealed class OceanStaticModel extends OceanObjModel {
   final Vector2 position;
-  OceanStaticModel({required this.position, required super.sprite});
+  final double regenRate;
+  OceanStaticModel(
+      {required this.regenRate, required this.position, required super.sprite});
 }
 
 class Seaweed1 extends OceanStaticModel {
-  Seaweed1({required super.position}) : super(sprite: 'static/seaweed1.png');
+  Seaweed1({required super.position})
+      : super(sprite: 'static/seaweed1.png', regenRate: 0.3);
 }
 
 class Coral1 extends OceanStaticModel {
-  Coral1({required super.position}) : super(sprite: 'coral.png');
+  Coral1({required super.position})
+      : super(sprite: 'coral.png', regenRate: 0.3);
 }

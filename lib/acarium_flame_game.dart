@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:carium/bloc/index.dart';
+import 'package:carium/bloc/scoring/scoring_resource_bloc.dart';
 import 'package:carium/config/constants.dart';
 import 'package:carium/level/tank.dart';
 import 'package:flame/components.dart';
@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 
 class Acarium extends FlameGame with HasCollisionDetection {
   late final CameraComponent cam;
+
+  Acarium({super.children, super.world, super.camera});
   @override
   Color backgroundColor() {
     return Colors.blueGrey;
@@ -26,8 +28,9 @@ class Acarium extends FlameGame with HasCollisionDetection {
     cam.viewfinder.anchor = Anchor.topLeft;
 
     // addAll([cam, world]);
-    await add(FlameBlocProvider.value(
-        value: ScoringResourceBloc(), children: [cam, world]));
+
+    await add(FlameBlocProvider<ScoringResourceBloc, ScoringResourceState>(
+        create: () => ScoringResourceBloc(), children: [cam, world]));
     return super.onLoad();
   }
 }

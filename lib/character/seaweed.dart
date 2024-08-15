@@ -1,20 +1,23 @@
 import 'dart:async';
 
 import 'package:carium/acarium_flame_game.dart';
+import 'package:carium/domain/entity/ocean_static_model.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 
 class Seaweed extends SpriteComponent
     with HasGameRef<Acarium>, CollisionCallbacks, DragCallbacks {
+  final OceanStaticModel seaweed;
   double accGenerateTime = 0;
   final generateRate = 1;
   double capacity = 100;
 
-  Seaweed({required super.position});
+  Seaweed({required this.seaweed});
   @override
   FutureOr<void> onLoad() {
-    sprite = Sprite(game.images.fromCache('seaweed.png'));
+    sprite = Sprite(game.images.fromCache(seaweed.sprite));
+    position = seaweed.position;
     add(RectangleHitbox());
     return super.onLoad();
   }

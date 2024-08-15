@@ -7,10 +7,13 @@ import 'package:carium/config/constants.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
+import '../domain/index.dart';
+
 enum FishType { fish1, fish2 }
 
-class Fish extends SpriteComponent
+class FishComponent extends SpriteComponent
     with HasGameRef<Acarium>, CollisionCallbacks {
+  final Fish fish;
   double accumulateTime = 0;
   final fixedDeltaTime = 1 / 60;
   final hungerDeltaTime = 0.1;
@@ -27,17 +30,18 @@ class Fish extends SpriteComponent
   Vector2 steerFactor = Vector2.zero();
   double hunger = 100;
 
-  Fish(
-      {required position,
+  FishComponent(
+      {required this.fish,
+      required position,
       required this.directionVector,
       required this.scaleFactor})
       : super(position: position);
 
   @override
-  FutureOr<void> onLoad() {
-    sprite = Sprite(game.images.fromCache('fish1.png'));
+  FutureOr<void> onLoad() async {
+    sprite = Sprite(game.images.fromCache(fish.sprite));
     scale = Vector2.all(scaleFactor);
-
+    hunger = fish.hunger;
     anchor = Anchor.center;
 
     add(RectangleHitbox());
@@ -52,6 +56,9 @@ class Fish extends SpriteComponent
       accumulateTime -= fixedDeltaTime;
     }
     hungerDrain(dt);
+    if (hunger < 50 && !isRemoved) {
+      seekFood();
+    }
     super.update(dt);
   }
 
@@ -63,8 +70,9 @@ class Fish extends SpriteComponent
     super.onCollision(intersectionPoints, other);
   }
 
-  Vector2 separation(List<PositionComponent> boids,
-      {double minDistance = 500}) {
+  void separation({double minDistance = 500}) {
+    final boids = game.descendants().whereType<FishComponent>().toList();
+    if (boids.isEmpty) return;
     var separation = Vector2.zero();
     for (var boid in boids) {
       var lineBtw = position - boid.position;
@@ -85,10 +93,12 @@ class Fish extends SpriteComponent
     separation.scaleTo(separationForce);
     final newDirection = directionVector + separation;
     directionVector = newDirection.normalized();
-    return separation;
+    // return separation;
   }
 
-  Vector2 cohesion(List<PositionComponent> boids) {
+  void cohesion() {
+    final boids = game.descendants().whereType<FishComponent>().toList();
+    if (boids.isEmpty) return;
     Vector2 sum = Vector2.zero();
     for (var other in boids) {
       double d = position.distanceTo(other.position);
@@ -100,13 +110,15 @@ class Fish extends SpriteComponent
     sum.scaleTo(cohesionForce);
     final newDirection = directionVector + sum;
     directionVector = newDirection.normalized();
-    return sum;
+    // return sum;
   }
 
-  Vector2 alignment(List<PositionComponent> boids) {
+  void alignment() {
+    final boids = game.descendants().whereType<FishComponent>().toList();
+    if (boids.isEmpty) return;
     Vector2 sum = Vector2.zero();
     double count = 0.0;
-    for (var (other as Fish) in boids) {
+    for (var other in boids) {
       double d = position.distanceTo(other.position);
       if ((d > 0) && (d < neighborDist)) {
         sum += other.velocity;
@@ -123,7 +135,7 @@ class Fish extends SpriteComponent
       final newDirection = directionVector + steer;
       directionVector = newDirection.normalized();
     }
-    return sum;
+    // return sum;
   }
 
   _tankBoundary() {
@@ -151,6 +163,9 @@ class Fish extends SpriteComponent
     velocity.y = ((moveSpeed) * directionVector.y);
     transform.angle = math.atan2(velocity.y, velocity.x);
     _tankBoundary();
+    separation(minDistance: neighborDist);
+    alignment();
+    cohesion();
     position.x += velocity.x * dt;
     position.y += velocity.y * dt;
     if (velocity.x < 0 && !isFlippedVertically) {
@@ -160,24 +175,18 @@ class Fish extends SpriteComponent
     }
   }
 
-  Vector2 seekFood(List<PositionComponent> weeds) {
-    Vector2 sum = Vector2.zero();
-    final other = weeds[0];
-    if (other is Seaweed) {
-      // print(other.absolutePosition);
-      final lineBtw = other.position - position;
-      // double d = math.Point(lineBtw.x, lineBtw.y).magnitude;
-      // if (d > 0) {
-      //   sum.add(lineBtw);
-      // }
-      lineBtw.normalize();
-      final newDirection = lineBtw;
-      directionVector = newDirection.normalized();
-    }
+  void seekFood() {
+    final weeds2 = game.descendants().whereType<Seaweed>().toList();
+    if (weeds2.isEmpty) return;
+    final other = weeds2[0];
+    final lineBtw = other.position - position;
+    lineBtw.normalize();
+    final newDirection = lineBtw;
+    directionVector = newDirection.normalized();
 
     // Vector2 steer = sum + velocity;
     // sum.x < 0 ? directionVector + sum : directionVector - sum;
-    return sum;
+    // return sum;
   }
 
   hungerDrain(double dt) {

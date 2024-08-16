@@ -57,7 +57,7 @@ class Seaweed extends SpriteComponent
 
   @override
   void onDragUpdate(DragUpdateEvent event) {
-    position = event.deviceEndPosition;
+    position += event.localDelta;
     super.onDragUpdate(event);
   }
 }

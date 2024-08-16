@@ -46,7 +46,7 @@ class Seaweed extends SpriteComponent
       //   removeFromParent();
       // }
       accGenerateTime -= generateRate;
-      scale = Vector2.all(capacity / 100);
+      scale = Vector2.all((capacity.abs()) / 100);
     }
     super.update(dt);
   }

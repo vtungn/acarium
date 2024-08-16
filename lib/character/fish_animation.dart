@@ -11,7 +11,7 @@ import '../domain/index.dart';
 
 enum FishType { fish1, fish2 }
 
-class FishComponent extends SpriteComponent
+class FishAnimationComponent extends SpriteAnimationComponent
     with HasGameRef<Acarium>, CollisionCallbacks {
   final Fish fish;
   double accumulateTime = 0;
@@ -32,7 +32,7 @@ class FishComponent extends SpriteComponent
 
   bool eatFactor = false;
 
-  FishComponent(
+  FishAnimationComponent(
       {required this.fish,
       required position,
       required this.directionVector,
@@ -41,8 +41,23 @@ class FishComponent extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
-    sprite = Sprite(game.images.fromCache(fish.sprite));
-    scale = Vector2.all(scaleFactor);
+    // sprite = Sprite(game.images.fromCache(fish.sprite));
+    animation = SpriteAnimation.fromFrameData(
+      game.images.fromCache(fish.sprite),
+      SpriteAnimationData.range(
+        start: 0,
+        end: 5,
+        amount: 5 * 13,
+        stepTimes: [0.1],
+        amountPerRow: 5,
+        // textureSize: Vector2.all(456),
+        textureSize: Vector2.all(315),
+      ),
+    );
+
+    // scale = Vector2.all(scaleFactor);
+    scale = Vector2.all(2);
+
     hunger = fish.hunger;
     anchor = Anchor.center;
 
@@ -57,7 +72,7 @@ class FishComponent extends SpriteComponent
 
     eatFactor = false;
     while (accumulateTime >= fixedDeltaTime) {
-      _onMove(dt);
+      // _onMove(dt);
       accumulateTime -= fixedDeltaTime;
     }
     hungerDrain(dt);
@@ -83,7 +98,8 @@ class FishComponent extends SpriteComponent
   }
 
   void separation({double minDistance = 500}) {
-    final boids = game.descendants().whereType<FishComponent>().toList();
+    final boids =
+        game.descendants().whereType<FishAnimationComponent>().toList();
     if (boids.isEmpty) return;
     var separation = Vector2.zero();
     for (var boid in boids) {
@@ -106,7 +122,8 @@ class FishComponent extends SpriteComponent
   }
 
   void cohesion() {
-    final boids = game.descendants().whereType<FishComponent>().toList();
+    final boids =
+        game.descendants().whereType<FishAnimationComponent>().toList();
     if (boids.isEmpty) return;
     Vector2 sum = Vector2.zero();
     for (var other in boids) {
@@ -123,7 +140,8 @@ class FishComponent extends SpriteComponent
   }
 
   void alignment() {
-    final boids = game.descendants().whereType<FishComponent>().toList();
+    final boids =
+        game.descendants().whereType<FishAnimationComponent>().toList();
     if (boids.isEmpty) return;
     Vector2 sum = Vector2.zero();
     double count = 0.0;
@@ -195,7 +213,8 @@ class FishComponent extends SpriteComponent
   }
 
   void seekPartner() {
-    final otherFish = game.descendants().whereType<FishComponent>().toList();
+    final otherFish =
+        game.descendants().whereType<FishAnimationComponent>().toList();
     if (otherFish.isEmpty) return;
     for (var otherFish in otherFish) {
       if (otherFish.eatFactor) {

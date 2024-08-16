@@ -19,7 +19,27 @@ class Smallfish1 extends Fish {
       : super(
           hunger: 100,
           reproduceRate: 5,
-          sprite: 'fish2.png',
+          sprite: 'fish1.png',
           food: [OceanObj.seaweed1],
+        );
+}
+
+class Smallfish2 extends Fish {
+  Smallfish2()
+      : super(
+          hunger: 100,
+          reproduceRate: 5,
+          sprite: 'nuc.png',
+          food: [OceanObj.seaweed1],
+        );
+}
+
+class Shark1 extends Fish {
+  Shark1()
+      : super(
+          hunger: 100,
+          reproduceRate: 5,
+          sprite: 'shark2.png',
+          food: [OceanObj.smallfish1, OceanObj.smallfish2],
         );
 }

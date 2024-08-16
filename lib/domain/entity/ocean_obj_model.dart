@@ -6,4 +6,6 @@ abstract class OceanObjModel {
 
 enum OceanObj {
   seaweed1,
+  smallfish1,
+  smallfish2,
 }

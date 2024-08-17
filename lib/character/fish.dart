@@ -14,6 +14,7 @@ enum FishType { fish1, fish2 }
 class FishComponent extends SpriteComponent
     with HasGameRef<Acarium>, CollisionCallbacks {
   final Fish fish;
+  double dtime = 0;
   double accumulateTime = 0;
   double accEatTime = 0;
   double accHungerTime = 0;
@@ -29,8 +30,6 @@ class FishComponent extends SpriteComponent
   double updateDirection = 0;
   Vector2 steerFactor = Vector2.zero();
   double hunger = 100;
-
-  bool eatFactor = false;
 
   FishComponent(
       {required this.fish,
@@ -52,10 +51,10 @@ class FishComponent extends SpriteComponent
 
   @override
   void update(double dt) {
+    dtime = dt;
     accumulateTime += dt;
     accEatTime += dt;
 
-    eatFactor = false;
     while (accumulateTime >= fixedDeltaTime) {
       _onMove(dt);
       accumulateTime -= fixedDeltaTime;
@@ -69,7 +68,7 @@ class FishComponent extends SpriteComponent
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    accEatTime += 0.001;
+    accEatTime += dtime;
     while (accEatTime >= eatDeltaTime) {
       if (other is Seaweed) {
         eatFood();
@@ -198,12 +197,12 @@ class FishComponent extends SpriteComponent
     final otherFish = game.descendants().whereType<FishComponent>().toList();
     if (otherFish.isEmpty) return;
     for (var otherFish in otherFish) {
-      if (otherFish.eatFactor) {
-        final lineBtw = otherFish.position - position;
-        lineBtw.normalize();
-        final newDirection = lineBtw;
-        directionVector = newDirection.normalized();
-      }
+      // if (otherFish.eatFactor) {
+      //   final lineBtw = otherFish.position - position;
+      //   lineBtw.normalize();
+      //   final newDirection = lineBtw;
+      //   directionVector = newDirection.normalized();
+      // }
     }
   }
 

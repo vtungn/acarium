@@ -44,16 +44,15 @@ class FishAnimationComponent extends SpriteAnimationComponent
     // sprite = Sprite(game.images.fromCache(fish.sprite));
     animation = SpriteAnimation.fromFrameData(
       game.images.fromCache(fish.sprite),
-      SpriteAnimationData.range(
-        start: 0,
-        end: 5,
-        amount: 5 * 13,
-        stepTimes: [0.1],
+      SpriteAnimationData.sequenced(
+        amount: 65,
+        stepTime: 0.1,
         amountPerRow: 5,
         // textureSize: Vector2.all(456),
         textureSize: Vector2.all(315),
       ),
     );
+    // animation.
 
     // scale = Vector2.all(scaleFactor);
     scale = Vector2.all(2);

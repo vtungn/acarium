@@ -29,6 +29,7 @@ class _MainMenuState extends State<MainMenu> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(fontFamily: 'Brixton'),
       home: Builder(builder: (context) {
         return Scaffold(
           body: SizedBox(
@@ -91,7 +92,10 @@ class _TextBtnMenu extends StatelessWidget {
                   // style: ButtonStyle(),
                   child: Text(
                     text,
-                    style: const TextStyle(color: Color(0xff274651)),
+                    style: const TextStyle(
+                      color: Color(0xff204450),
+                      fontSize: 56,
+                    ),
                   )))
         ],
       ),

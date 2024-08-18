@@ -31,27 +31,27 @@ class Tank extends World
 
   void fishLayerFar() {
     var rnd = math.Random();
-    for (var i = 0; i < 30; i++) {
+    for (var i = 0; i < 10; i++) {
       final fish = FishComponent(
-        fish: Smallfish1(),
+        fish: Thu(),
         position:
             Vector2(rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),
         directionVector:
             Vector2(rnd.nextDouble() * 1 - 0.5, rnd.nextDouble() * 1 - 0.5),
         // direction: 0,
-        scaleFactor: rnd.nextDouble() * 2 + 1,
+        scaleFactor: rnd.nextDouble() * 0.5 + 1,
       );
       add(fish);
     }
-    for (var i = 0; i < 30; i++) {
+    for (var i = 0; i < 10; i++) {
       final fish = FishComponent(
-        fish: Smallfish2(),
+        fish: Vogia(),
         position:
             Vector2(rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),
         directionVector:
             Vector2(rnd.nextDouble() * 1 - 0.5, rnd.nextDouble() * 1 - 0.5),
         // direction: 0,
-        scaleFactor: rnd.nextDouble() * 2 + 1,
+        scaleFactor: rnd.nextDouble() * 0.5 + 1,
       );
       add(fish);
     }

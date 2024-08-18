@@ -41,6 +41,8 @@ class FishComponent extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
+    final rnd = math.Random();
+    scaleFactor = scaleFactor * (rnd.nextDouble() * 0.2 + 1);
     sprite = Sprite(game.images.fromCache(fish.sprite));
     scale = Vector2.all(scaleFactor);
     hunger = fish.hunger;

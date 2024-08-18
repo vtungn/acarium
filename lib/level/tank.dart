@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:carium/bloc/scoring/scoring_resource_bloc.dart';
-import 'package:carium/character/fish_animation.dart';
+import 'package:carium/character/fish_component.dart';
 import 'package:carium/config/constants.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
@@ -32,8 +32,8 @@ class Tank extends World
   void fishLayerFar() {
     var rnd = math.Random();
     for (var i = 0; i < 30; i++) {
-      final fish = FishAnimationComponent(
-        fish: Shark1(),
+      final fish = FishComponent(
+        fish: Smallfish1(),
         position:
             Vector2(rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),
         directionVector:
@@ -43,15 +43,18 @@ class Tank extends World
       );
       add(fish);
     }
-    // add(FishAnimationComponent(
-    //   fish: Shark1(),
-    //   position:
-    //       Vector2(rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),
-    //   directionVector:
-    //       Vector2(rnd.nextDouble() * 1 - 0.5, rnd.nextDouble() * 1 - 0.5),
-    //   // direction: 0,
-    //   scaleFactor: rnd.nextDouble() * 2 + 1,
-    // ));
+    for (var i = 0; i < 30; i++) {
+      final fish = FishComponent(
+        fish: Smallfish2(),
+        position:
+            Vector2(rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),
+        directionVector:
+            Vector2(rnd.nextDouble() * 1 - 0.5, rnd.nextDouble() * 1 - 0.5),
+        // direction: 0,
+        scaleFactor: rnd.nextDouble() * 2 + 1,
+      );
+      add(fish);
+    }
   }
 
   void staticObjNear() {}

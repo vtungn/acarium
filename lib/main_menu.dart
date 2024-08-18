@@ -39,29 +39,31 @@ class _MainMenuState extends State<MainMenu> {
               children: [
                 VideoPlayer(_controller),
                 Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      _TextBtnMenu(
-                        text: 'New game',
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return GameWidget(game: Acarium());
-                          }));
-                        },
-                      ),
-                      _TextBtnMenu(
-                        text: 'Settings',
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return GameWidget(game: Acarium());
-                          }));
-                        },
-                      ),
-                    ],
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        _TextBtnMenu(
+                          text: 'New game',
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return GameWidget(game: Acarium());
+                            }));
+                          },
+                        ),
+                        _TextBtnMenu(
+                          text: 'Settings',
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return GameWidget(game: Acarium());
+                            }));
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

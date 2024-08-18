@@ -4,11 +4,12 @@ import 'package:carium/bloc/scoring/scoring_resource_bloc.dart';
 import 'package:carium/config/constants.dart';
 import 'package:carium/level/tank.dart';
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
 
-class Acarium extends FlameGame with HasCollisionDetection {
+class Acarium extends FlameGame with HasCollisionDetection, TapDetector {
   late final CameraComponent cam;
 
   Acarium({super.children, super.world, super.camera});
@@ -32,5 +33,10 @@ class Acarium extends FlameGame with HasCollisionDetection {
     await add(FlameBlocProvider<ScoringResourceBloc, ScoringResourceState>(
         create: () => ScoringResourceBloc(), children: [cam, world]));
     return super.onLoad();
+  }
+
+  @override
+  void onTapDown(TapDownInfo info) {
+    super.onTapDown(info);
   }
 }

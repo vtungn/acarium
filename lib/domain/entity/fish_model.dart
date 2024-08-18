@@ -29,7 +29,7 @@ class Smallfish2 extends Fish {
       : super(
           hunger: 100,
           reproduceRate: 5,
-          sprite: 'nuc.png',
+          sprite: 'moi.png',
           food: [OceanObj.seaweed1],
         );
 }

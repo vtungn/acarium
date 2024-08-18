@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:carium/acarium_flame_game.dart';
+import 'package:carium/character/food_pellet.dart';
 import 'package:carium/character/ocean_obj_component.dart';
 import 'package:carium/config/constants.dart';
 import 'package:carium/domain/fish_move_mixin.dart';
@@ -46,9 +47,10 @@ class FishComponent extends SpriteComponent
     sprite = Sprite(game.images.fromCache(fish.sprite));
     scale = Vector2.all(scaleFactor);
     hunger = fish.hunger;
-    anchor = Anchor.center;
-
+    // anchor = Anchor.center;
     add(RectangleHitbox());
+    debugMode = true;
+    add(FoodPellet(foodType: fish.foodType));
     return super.onLoad();
   }
 
@@ -73,12 +75,12 @@ class FishComponent extends SpriteComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     accEatTime += dtime;
     while (accEatTime >= eatDeltaTime) {
-      if (other is OceanObjComponent) {
+      if (other is FoodPellet && fish.food.contains(other.foodType)) {
+        print('eat');
         eatFood();
         other.gotEaten();
       }
-      // eatFactor = true;
-      accEatTime -= eatDeltaTime / 3;
+      accEatTime -= eatDeltaTime;
     }
 
     super.onCollision(intersectionPoints, other);
@@ -197,7 +199,7 @@ class FishComponent extends SpriteComponent
 
   void seekFood() {
     var foodsOnScreen =
-        game.descendants().whereType<SpriteComponent>().toList();
+        game.descendants().whereType<PositionComponent>().toList();
     foodsOnScreen = foodsOnScreen.where((element) {
       if (element is FishComponent) {
         return fish.food.contains(element.fish.foodType);
@@ -214,7 +216,7 @@ class FishComponent extends SpriteComponent
       final bDistance = (b.position - position).length;
       return aDistance.compareTo(bDistance);
     });
-    swimToward(foodsOnScreen.first.position);
+    swimToward(foodsOnScreen.first.center);
   }
 
   void swimToward(Vector2 target) {
@@ -237,18 +239,7 @@ class FishComponent extends SpriteComponent
   //   }
   // }
 
-  // hungerDrain(double dt) {
-  //   accHungerTime += dt;
-  //   while (accHungerTime >= hungerDeltaTime) {
-  //     hunger--;
-  //     accHungerTime -= hungerDeltaTime;
-  //     if (hunger < -20) {
-  //       death();
-  //     }
-  //   }
-  // }
-
   eatFood() {
-    hunger += 5;
+    hunger += 80;
   }
 }

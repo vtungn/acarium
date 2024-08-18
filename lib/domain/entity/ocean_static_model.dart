@@ -21,11 +21,11 @@ class Seaweed1 extends OceanStaticModel {
         );
 }
 
-// class Coral1 extends OceanStaticModel {
-//   Coral1({required super.position})
-//       : super(
-//           sprite: 'coral.png',
-//           regenRate: 0.3,
-//           foodType: FoodType.seaweed,
-//         );
-// }
+class Plankton extends OceanStaticModel {
+  Plankton({required super.position})
+      : super(
+          sprite: '',
+          regenRate: 0.3,
+          foodType: FoodType.plankton,
+        );
+}

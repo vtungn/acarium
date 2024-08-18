@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:carium/acarium_flame_game.dart';
 import 'package:carium/bloc/scoring/scoring_resource_bloc.dart';
+import 'package:carium/character/food_pellet.dart';
 import 'package:carium/domain/entity/ocean_static_model.dart';
 import 'package:carium/domain/index.dart';
-import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame_bloc/flame_bloc.dart';
@@ -17,7 +17,8 @@ class OceanObjComponent extends SpriteComponent
   final OceanStaticModel oceanObj;
   double accGenerateTime = 0;
   double generateRate = 0.5;
-  double capacity = 100;
+  late TextComponent text;
+  List<FoodPellet> foodPellet = [];
 
   OceanObjComponent({required this.oceanObj});
   @override
@@ -25,7 +26,10 @@ class OceanObjComponent extends SpriteComponent
     sprite = Sprite(game.images.fromCache(oceanObj.sprite));
     position = oceanObj.position;
     generateRate = oceanObj.regenRate;
-    add(RectangleHitbox());
+    text =
+        TextComponent(text: children.length.toString(), scale: Vector2.all(10));
+    add(text);
+
     return super.onLoad();
   }
 
@@ -39,20 +43,18 @@ class OceanObjComponent extends SpriteComponent
   void update(double dt) {
     accGenerateTime += dt;
     while (accGenerateTime >= generateRate) {
-      if (capacity <= 100) {
-        capacity += 10;
-      }
-      // if (capacity < -10) {
-      //   removeFromParent();
-      // }
       accGenerateTime -= generateRate;
-      scale = Vector2.all((capacity.abs()) / 100);
+      if (children.length < 10) {
+        generateFood();
+      }
     }
+    text.text = children.length.toString();
     super.update(dt);
   }
 
-  void gotEaten() {
-    capacity--;
+  generateFood() {
+    final food = FoodPellet(foodType: oceanObj.foodType);
+    add(food);
   }
 
   @override

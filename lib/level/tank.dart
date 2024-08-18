@@ -33,7 +33,7 @@ class Tank extends World
     var rnd = math.Random();
     for (var i = 0; i < 10; i++) {
       final fish = FishComponent(
-        fish: Maotien(),
+        fish: Moi(),
         position:
             Vector2(rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),
         directionVector:
@@ -43,9 +43,9 @@ class Tank extends World
       );
       add(fish);
     }
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 1; i++) {
       final fish = FishComponent(
-        fish: Duoigai(),
+        fish: Moi(),
         position:
             Vector2(rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),
         directionVector:

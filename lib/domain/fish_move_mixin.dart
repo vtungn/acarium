@@ -14,7 +14,7 @@ mixin FishMoveMixin on SpriteComponent {
   hungerDrain(double dt) {
     accHungerTime += dt;
     while (accHungerTime >= hungerDeltaTime) {
-      // hunger--;
+      hunger--;
       accHungerTime -= hungerDeltaTime;
       if (hunger < -20) {
         death();

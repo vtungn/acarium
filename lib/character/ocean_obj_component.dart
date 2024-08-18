@@ -9,22 +9,22 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 
-class Seaweed extends SpriteComponent
+class OceanObjComponent extends SpriteComponent
     with
         HasGameRef<Acarium>,
         DragCallbacks,
         FlameBlocListenable<ScoringResourceBloc, ScoringResourceState> {
-  final OceanStaticModel seaweed;
+  final OceanStaticModel oceanObj;
   double accGenerateTime = 0;
   double generateRate = 0.5;
   double capacity = 100;
 
-  Seaweed({required this.seaweed});
+  OceanObjComponent({required this.oceanObj});
   @override
   Future<void> onLoad() async {
-    sprite = Sprite(game.images.fromCache(seaweed.sprite));
-    position = seaweed.position;
-    generateRate = seaweed.regenRate;
+    sprite = Sprite(game.images.fromCache(oceanObj.sprite));
+    position = oceanObj.position;
+    generateRate = oceanObj.regenRate;
     add(RectangleHitbox());
     return super.onLoad();
   }

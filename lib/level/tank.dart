@@ -7,7 +7,7 @@ import 'package:carium/config/constants.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 
-import '../character/seaweed.dart';
+import '../character/ocean_obj_component.dart';
 import '../domain/index.dart';
 
 class Tank extends World
@@ -24,8 +24,8 @@ class Tank extends World
 
   void background() {}
   void staticObjFar() async {
-    add(Seaweed(
-        seaweed:
+    add(OceanObjComponent(
+        oceanObj:
             Seaweed1(position: Vector2(tvWidth / 2 + 10, tvHeight / 2 + 20))));
   }
 
@@ -33,7 +33,7 @@ class Tank extends World
     var rnd = math.Random();
     for (var i = 0; i < 10; i++) {
       final fish = FishComponent(
-        fish: Thu(),
+        fish: Maotien(),
         position:
             Vector2(rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),
         directionVector:
@@ -45,7 +45,7 @@ class Tank extends World
     }
     for (var i = 0; i < 10; i++) {
       final fish = FishComponent(
-        fish: Vogia(),
+        fish: Duoigai(),
         position:
             Vector2(rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),
         directionVector:

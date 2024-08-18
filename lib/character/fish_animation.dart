@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:carium/acarium_flame_game.dart';
-import 'package:carium/character/seaweed.dart';
+import 'package:carium/character/ocean_obj_component.dart';
 import 'package:carium/config/constants.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -85,7 +85,7 @@ class FishAnimationComponent extends SpriteAnimationComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     accEatTime += 0.001;
     while (accEatTime >= eatDeltaTime) {
-      if (other is Seaweed) {
+      if (other is OceanObjComponent) {
         eatFood();
         other.gotEaten();
       }
@@ -202,7 +202,7 @@ class FishAnimationComponent extends SpriteAnimationComponent
   }
 
   void seekFood() {
-    final weeds2 = game.descendants().whereType<Seaweed>().toList();
+    final weeds2 = game.descendants().whereType<OceanObjComponent>().toList();
     if (weeds2.isEmpty) return;
     final other = weeds2[0];
     final lineBtw = other.position - position;

@@ -3,14 +3,14 @@ import 'package:carium/domain/entity/ocean_obj_model.dart';
 sealed class Fish extends OceanObjModel {
   final double hunger;
   final int reproduceRate;
-  final List<OceanObj> food;
-  final List<OceanObj> predators;
+
+  final List<FoodType> food;
 
   Fish(
       {required this.hunger,
       required this.reproduceRate,
+      super.foodType = FoodType.notfood,
       this.food = const [],
-      this.predators = const [],
       required super.sprite});
 }
 
@@ -20,7 +20,8 @@ class Bapbepxanh extends Fish {
           hunger: 100,
           reproduceRate: 5,
           sprite: 'bapnexanh.png',
-          food: [OceanObj.seaweed1],
+          // foodType: FoodType.smallfish,
+          food: [FoodType.seaweed, FoodType.algae],
         );
 }
 
@@ -30,7 +31,7 @@ class Buommonhon extends Fish {
           hunger: 100,
           reproduceRate: 5,
           sprite: 'buommonhon.png',
-          food: [OceanObj.seaweed1],
+          food: [FoodType.seaweed, FoodType.plankton],
         );
 }
 
@@ -40,7 +41,7 @@ class Duoigai extends Fish {
           hunger: 100,
           reproduceRate: 5,
           sprite: 'duoigai.png',
-          food: [OceanObj.seaweed1],
+          food: [FoodType.seaweed],
         );
 }
 
@@ -50,7 +51,7 @@ class Maotien extends Fish {
           hunger: 100,
           reproduceRate: 5,
           sprite: 'maotien.png',
-          food: [OceanObj.seaweed1],
+          food: [FoodType.seaweed],
         );
 }
 
@@ -60,7 +61,7 @@ class Maptrang extends Fish {
           hunger: 100,
           reproduceRate: 5,
           sprite: 'maptrang.png',
-          food: [OceanObj.seaweed1],
+          food: [FoodType.seaweed],
         );
 }
 
@@ -70,7 +71,7 @@ class Moi extends Fish {
           hunger: 100,
           reproduceRate: 5,
           sprite: 'moi.png',
-          food: [OceanObj.seaweed1],
+          food: [FoodType.seaweed],
         );
 }
 
@@ -80,7 +81,7 @@ class Ngua extends Fish {
           hunger: 100,
           reproduceRate: 5,
           sprite: 'ngua.png',
-          food: [OceanObj.seaweed1],
+          food: [FoodType.seaweed],
         );
 }
 
@@ -90,7 +91,7 @@ class Nguvayvang extends Fish {
           hunger: 100,
           reproduceRate: 5,
           sprite: 'nguvayvang.png',
-          food: [OceanObj.seaweed1],
+          food: [FoodType.seaweed],
         );
 }
 
@@ -100,7 +101,7 @@ class Nguvayxanh extends Fish {
           hunger: 100,
           reproduceRate: 5,
           sprite: 'nguvayxanh.png',
-          food: [OceanObj.seaweed1],
+          food: [FoodType.seaweed],
         );
 }
 
@@ -110,7 +111,7 @@ class Thantien extends Fish {
           hunger: 100,
           reproduceRate: 5,
           sprite: 'thantien.png',
-          food: [OceanObj.seaweed1],
+          food: [FoodType.seaweed],
         );
 }
 
@@ -120,7 +121,7 @@ class Thu extends Fish {
           hunger: 100,
           reproduceRate: 5,
           sprite: 'thu.png',
-          food: [OceanObj.seaweed1],
+          food: [FoodType.seaweed],
         );
 }
 
@@ -130,6 +131,6 @@ class Vogia extends Fish {
           hunger: 100,
           reproduceRate: 5,
           sprite: 'vogia.png',
-          food: [OceanObj.seaweed1],
+          food: [FoodType.seaweed],
         );
 }

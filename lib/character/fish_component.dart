@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:carium/acarium_flame_game.dart';
-import 'package:carium/character/seaweed.dart';
+import 'package:carium/character/ocean_obj_component.dart';
 import 'package:carium/config/constants.dart';
 import 'package:carium/domain/fish_move_mixin.dart';
 import 'package:flame/collisions.dart';
@@ -73,7 +73,7 @@ class FishComponent extends SpriteComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     accEatTime += dtime;
     while (accEatTime >= eatDeltaTime) {
-      if (other is Seaweed) {
+      if (other is OceanObjComponent) {
         eatFood();
         other.gotEaten();
       }
@@ -196,27 +196,46 @@ class FishComponent extends SpriteComponent
   }
 
   void seekFood() {
-    final weeds2 = game.descendants().whereType<Seaweed>().toList();
-    if (weeds2.isEmpty) return;
-    final other = weeds2[0];
-    final lineBtw = other.position - position;
+    var foodsOnScreen =
+        game.descendants().whereType<SpriteComponent>().toList();
+    foodsOnScreen = foodsOnScreen.where((element) {
+      if (element is FishComponent) {
+        return fish.food.contains(element.fish.foodType);
+      } else if (element is OceanObjComponent) {
+        return fish.food.contains(element.oceanObj.foodType);
+      } else {
+        return false;
+      }
+    }).toList();
+    if (foodsOnScreen.isEmpty) return;
+    // closed food in foodsOnScreen
+    foodsOnScreen.sort((a, b) {
+      final aDistance = (a.position - position).length;
+      final bDistance = (b.position - position).length;
+      return aDistance.compareTo(bDistance);
+    });
+    swimToward(foodsOnScreen.first.position);
+  }
+
+  void swimToward(Vector2 target) {
+    final lineBtw = target - position;
     lineBtw.normalize();
     final newDirection = lineBtw;
     directionVector = newDirection.normalized();
   }
 
-  void seekPartner() {
-    final otherFish = game.descendants().whereType<FishComponent>().toList();
-    if (otherFish.isEmpty) return;
-    for (var otherFish in otherFish) {
-      // if (otherFish.eatFactor) {
-      //   final lineBtw = otherFish.position - position;
-      //   lineBtw.normalize();
-      //   final newDirection = lineBtw;
-      //   directionVector = newDirection.normalized();
-      // }
-    }
-  }
+  // void seekPartner() {
+  //   final otherFish = game.descendants().whereType<FishComponent>().toList();
+  //   if (otherFish.isEmpty) return;
+  //   for (var otherFish in otherFish) {
+  //     // if (otherFish.eatFactor) {
+  //     //   final lineBtw = otherFish.position - position;
+  //     //   lineBtw.normalize();
+  //     //   final newDirection = lineBtw;
+  //     //   directionVector = newDirection.normalized();
+  //     // }
+  //   }
+  // }
 
   // hungerDrain(double dt) {
   //   accHungerTime += dt;

@@ -58,7 +58,7 @@ class FishAnimationComponent extends SpriteAnimationComponent
     // scale = Vector2.all(scaleFactor);
     scale = Vector2.all(2);
 
-    hunger = fish.hunger;
+    hunger = fish.hungerTime;
     anchor = Anchor.center;
 
     add(RectangleHitbox());

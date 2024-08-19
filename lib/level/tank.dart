@@ -39,7 +39,6 @@ class Tank extends World
         directionVector:
             Vector2(rnd.nextDouble() * 1 - 0.5, rnd.nextDouble() * 1 - 0.5),
         // direction: 0,
-        scaleFactor: rnd.nextDouble() * 0.5 + 1,
       );
       add(fish);
     }
@@ -51,7 +50,6 @@ class Tank extends World
         directionVector:
             Vector2(rnd.nextDouble() * 1 - 0.5, rnd.nextDouble() * 1 - 0.5),
         // direction: 0,
-        scaleFactor: rnd.nextDouble() * 0.5 + 1,
       );
       add(fish);
     }

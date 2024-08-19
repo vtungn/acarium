@@ -1,38 +1,52 @@
 import 'dart:ui';
 
+import 'package:carium/character/fish_component.dart';
 import 'package:flame/components.dart';
-import 'package:flame/effects.dart';
 
 enum FishState { idle, hungry, reproduce }
 
 mixin FishMoveMixin on SpriteComponent {
   double accHungerTime = 0;
-  double hunger = 100;
+  double hungerStat = 100;
+  double accReproduceTime = 0;
+  double reproduceStat = 0;
   double get hungerDeltaTime;
+  double get reProduceTimeRate;
+  double get oneFoodIncrease;
   FishState state = FishState.idle;
-  var hungryEffect = ColorEffect(
-    Color.fromARGB(255, 248, 0, 0),
-    EffectController(duration: 1.5),
-    opacityTo: 0.8,
-  );
 
   @override
   void update(double dt) {
     hungerDrain(dt);
+    produceGain(dt);
     super.update(dt);
+  }
+
+  produceGain(double dt) {
+    accReproduceTime += dt;
+    while (accReproduceTime >= reProduceTimeRate) {
+      accReproduceTime -= reProduceTimeRate;
+      if (reproduceStat >= 100 && state != FishState.hungry && !isRemoved) {
+        state = FishState.reproduce;
+        seekPartner();
+        tint(const Color.fromARGB(123, 0, 248, 0));
+      } else {
+        reproduceStat++;
+      }
+    }
   }
 
   hungerDrain(double dt) {
     accHungerTime += dt;
     while (accHungerTime >= hungerDeltaTime) {
-      hunger--;
+      hungerStat--;
       accHungerTime -= hungerDeltaTime;
-      if (hunger < 50 && !isRemoved) {
+      if (hungerStat < 50 && !isRemoved) {
         state = FishState.hungry;
         seekFood();
-        tint(Color.fromARGB(113, 248, 0, 0));
+        tint(const Color.fromARGB(113, 248, 0, 0));
       }
-      if (hunger < -20) {
+      if (hungerStat < -20) {
         death();
       }
     }
@@ -43,13 +57,23 @@ mixin FishMoveMixin on SpriteComponent {
   }
 
   eatFood() {
-    hunger += 80;
-    state = FishState.idle;
-    // if (children.contains(hungryEffect)) {
-    //   children.remove(hungryEffect);
+    hungerStat += oneFoodIncrease;
+    if (hungerStat >= 80) {
+      state = FishState.idle;
+      tint(const Color(0x00000000));
+    }
+  }
+
+  reproduceNewFish(fish) {
+    reproduceStat = 0;
     tint(const Color(0x00000000));
-    // }
+    state = FishState.idle;
+    parent?.add(FishComponent(
+        fish: fish,
+        position: Vector2.random(),
+        directionVector: Vector2.random()));
   }
 
   seekFood();
+  seekPartner();
 }

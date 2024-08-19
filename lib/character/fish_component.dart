@@ -19,7 +19,9 @@ class FishComponent extends SpriteComponent
   double accEatTime = 0;
   final fixedDeltaTime = 1 / 60;
   @override
-  final hungerDeltaTime = 0.1;
+  var hungerDeltaTime = 0.1;
+  @override
+  var reProduceTimeRate = 0.1;
   final eatDeltaTime = 2;
   Vector2 velocity = Vector2.zero();
   double direction = 0.0;
@@ -29,21 +31,23 @@ class FishComponent extends SpriteComponent
   double separationRadius = 600;
   double updateDirection = 0;
   Vector2 steerFactor = Vector2.zero();
+  @override
+  late double oneFoodIncrease = 80;
 
   FishComponent(
-      {required this.fish,
-      required position,
-      required this.directionVector,
-      required this.scaleFactor})
+      {required this.fish, required position, required this.directionVector})
       : super(position: position);
 
   @override
   FutureOr<void> onLoad() async {
     final rnd = math.Random();
-    scaleFactor = scaleFactor * (rnd.nextDouble() * 0.2 + 1);
+    scaleFactor = fish.spriteScale * (rnd.nextDouble() * 0.2 + 1);
     sprite = Sprite(game.images.fromCache(fish.sprite));
     scale = Vector2.all(scaleFactor);
-    hunger = fish.hunger;
+    hungerStat = fish.hungerTime;
+    oneFoodIncrease = fish.oneFoodIncrease;
+    reProduceTimeRate = fish.reproduceRate;
+    hungerDeltaTime = fish.hungerTime;
     anchor = Anchor.center;
     add(RectangleHitbox());
     add(FoodPellet(foodType: fish.foodType, foodSize: size));
@@ -60,7 +64,6 @@ class FishComponent extends SpriteComponent
       _onMove(dt);
       accumulateTime -= fixedDeltaTime;
     }
-    hungerDrain(dt);
 
     super.update(dt);
   }
@@ -77,12 +80,21 @@ class FishComponent extends SpriteComponent
       }
       accEatTime -= eatDeltaTime;
     }
+    if (state == FishState.reproduce &&
+        other is FishComponent &&
+        other.state == FishState.reproduce &&
+        other.fish.runtimeType == fish.runtimeType) {
+      reproduceNewFish(fish);
+    }
 
     super.onCollision(intersectionPoints, other);
   }
 
   void separation({double minDistance = 500}) {
-    var boids = game.descendants().whereType<FishComponent>().toList();
+    var boids = game
+        .descendants(includeSelf: false)
+        .whereType<FishComponent>()
+        .toList();
     boids = boids
         .where((other) => other.fish.runtimeType == fish.runtimeType)
         .toList();
@@ -108,7 +120,10 @@ class FishComponent extends SpriteComponent
   }
 
   void cohesion() {
-    var boids = game.descendants().whereType<FishComponent>().toList();
+    var boids = game
+        .descendants(includeSelf: false)
+        .whereType<FishComponent>()
+        .toList();
     boids = boids
         .where((other) => other.fish.runtimeType == fish.runtimeType)
         .toList();
@@ -128,7 +143,10 @@ class FishComponent extends SpriteComponent
   }
 
   void alignment() {
-    var boids = game.descendants().whereType<FishComponent>().toList();
+    var boids = game
+        .descendants(includeSelf: false)
+        .whereType<FishComponent>()
+        .toList();
     boids = boids
         .where((other) => other.fish.runtimeType == fish.runtimeType)
         .toList();
@@ -222,16 +240,23 @@ class FishComponent extends SpriteComponent
     directionVector = newDirection.normalized();
   }
 
-  // void seekPartner() {
-  //   final otherFish = game.descendants().whereType<FishComponent>().toList();
-  //   if (otherFish.isEmpty) return;
-  //   for (var otherFish in otherFish) {
-  //     // if (otherFish.eatFactor) {
-  //     //   final lineBtw = otherFish.position - position;
-  //     //   lineBtw.normalize();
-  //     //   final newDirection = lineBtw;
-  //     //   directionVector = newDirection.normalized();
-  //     // }
-  //   }
-  // }
+  @override
+  void seekPartner() {
+    var otherFish = game
+        .descendants(includeSelf: false)
+        .whereType<FishComponent>()
+        .toList();
+    otherFish = otherFish
+        .where((other) =>
+            other.fish.runtimeType == fish.runtimeType &&
+            other.state == FishState.reproduce)
+        .toList();
+    if (otherFish.isEmpty || otherFish.length == 1) return;
+    otherFish.sort((a, b) {
+      final aDistance = (a.position - position).length;
+      final bDistance = (b.position - position).length;
+      return aDistance.compareTo(bDistance);
+    });
+    swimToward(otherFish[1].position);
+  }
 }

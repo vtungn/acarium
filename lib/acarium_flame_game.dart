@@ -12,6 +12,9 @@ import 'package:flutter/material.dart';
 class Acarium extends FlameGame
     with HasCollisionDetection, MouseMovementDetector {
   late final CameraComponent cam;
+  @override
+  // TODO: implement size
+  Vector2 get size => Vector2(tvWidth, tvHeight);
 
   Acarium({super.children, super.world, super.camera});
   @override

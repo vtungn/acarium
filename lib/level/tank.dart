@@ -45,12 +45,11 @@ class Tank extends World with HasGameRef<Acarium>, PointerMoveCallbacks {
     }
     for (var i = 0; i < 1; i++) {
       final fish = FishComponent(
-        fish: Maptrang(),
+        fish: Nguvayxanh(),
         position:
             Vector2(rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),
         directionVector:
             Vector2(rnd.nextDouble() * 1 - 0.5, rnd.nextDouble() * 1 - 0.5),
-        // direction: 0,
       );
       fish1Layer.add(fish);
     }

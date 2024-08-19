@@ -5,7 +5,20 @@ import 'package:carium/acarium_flame_game.dart';
 import 'package:flame/components.dart';
 import 'package:flame/rendering.dart';
 
-class BackgroundLayer extends Component {}
+class BackgroundLayer extends Component with HasGameRef<Acarium> {
+  final String backgroundImage;
+
+  BackgroundLayer(
+      {super.children,
+      super.priority,
+      super.key,
+      required this.backgroundImage});
+  @override
+  FutureOr<void> onLoad() {
+    add(SpriteComponent.fromImage(game.images.fromCache(backgroundImage)));
+    return super.onLoad();
+  }
+}
 
 class StaticObjFarLayer extends Component {}
 

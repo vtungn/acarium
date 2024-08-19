@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:carium/acarium_flame_game.dart';
+import 'package:carium/character/crab_component.dart';
 import 'package:carium/character/fish_component.dart';
 import 'package:carium/character/ocean_obj_component.dart';
 import 'package:carium/config/constants.dart';
@@ -15,16 +16,16 @@ class Tank extends World with HasGameRef<Acarium>, PointerMoveCallbacks {
   final fish1Layer = FishLayerFar();
   @override
   FutureOr<void> onLoad() async {
-    add(BackgroundLayer()
+    add(BackgroundLayer(backgroundImage: 'static/closesea.jpg'));
+    add(StaticObjFarLayer()
       ..add(OceanObjComponent(
           oceanObj: Seaweed1(
               position: Vector2(tvWidth / 2 + 10, tvHeight / 2 + 20)))));
-    add(StaticObjFarLayer());
     add(fish1Layer);
     add(StaticObjNearLayer());
-    add(FishLayerNear());
+    add(FishLayerNear()..add(CrabComponent()));
     add(CloseupLayer());
-    fishLayerFar();
+    // fishLayerFar();
     return super.onLoad();
   }
 
@@ -34,7 +35,7 @@ class Tank extends World with HasGameRef<Acarium>, PointerMoveCallbacks {
     var rnd = math.Random();
     for (var i = 0; i < 5; i++) {
       final fish = FishComponent(
-        fish: Moi(),
+        fish: Ngua(),
         position:
             Vector2(rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),
         directionVector:
@@ -54,6 +55,8 @@ class Tank extends World with HasGameRef<Acarium>, PointerMoveCallbacks {
       fish1Layer.add(fish);
     }
   }
+
+  void addRock() {}
 
   @override
   void onPointerMove(PointerMoveEvent event) {

@@ -6,7 +6,7 @@ import 'package:flame/components.dart';
 class TankMed extends World {
   @override
   FutureOr<void> onLoad() {
-    add(BackgroundLayer());
+    add(BackgroundLayer(backgroundImage: 'static/farsea.jpg'));
     add(StaticObjFarLayer());
     add(FishLayerFar());
     add(StaticObjNearLayer());

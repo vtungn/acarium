@@ -1,37 +1,38 @@
 import 'dart:async';
 import 'dart:math' as math;
 
-import 'package:carium/bloc/scoring/scoring_resource_bloc.dart';
+import 'package:carium/acarium_flame_game.dart';
 import 'package:carium/character/fish_component.dart';
 import 'package:carium/character/ocean_obj_component.dart';
 import 'package:carium/config/constants.dart';
 import 'package:flame/components.dart';
-import 'package:flame_bloc/flame_bloc.dart';
+import 'package:flame/events.dart';
 
 import '../domain/index.dart';
+import 'tank_layer.dart';
 
-class Tank extends World
-    with FlameBlocListenable<ScoringResourceBloc, ScoringResourceState> {
+class Tank extends World with HasGameRef<Acarium>, PointerMoveCallbacks {
+  final fish1Layer = FishLayerFar();
   @override
   FutureOr<void> onLoad() async {
-    background();
-    staticObjFar();
+    add(BackgroundLayer()
+      ..add(OceanObjComponent(
+          oceanObj: Seaweed1(
+              position: Vector2(tvWidth / 2 + 10, tvHeight / 2 + 20)))));
+    add(StaticObjFarLayer());
+    add(fish1Layer);
+    add(StaticObjNearLayer());
+    add(FishLayerNear());
+    add(CloseupLayer());
     fishLayerFar();
-    staticObjNear();
-    fishLayerNear();
     return super.onLoad();
   }
 
-  void background() {}
-  void staticObjFar() async {
-    add(OceanObjComponent(
-        oceanObj:
-            Seaweed1(position: Vector2(tvWidth / 2 + 10, tvHeight / 2 + 20))));
-  }
-
   void fishLayerFar() {
+    // final thisLayer = game.descendants().whereType<OceanObjComponent>();
+    // print(thisLayer);
     var rnd = math.Random();
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 5; i++) {
       final fish = FishComponent(
         fish: Moi(),
         position:
@@ -40,7 +41,7 @@ class Tank extends World
             Vector2(rnd.nextDouble() * 1 - 0.5, rnd.nextDouble() * 1 - 0.5),
         // direction: 0,
       );
-      add(fish);
+      fish1Layer.add(fish);
     }
     for (var i = 0; i < 1; i++) {
       final fish = FishComponent(
@@ -51,11 +52,13 @@ class Tank extends World
             Vector2(rnd.nextDouble() * 1 - 0.5, rnd.nextDouble() * 1 - 0.5),
         // direction: 0,
       );
-      add(fish);
+      fish1Layer.add(fish);
     }
   }
 
-  void staticObjNear() {}
-
-  void fishLayerNear() {}
+  @override
+  void onPointerMove(PointerMoveEvent event) {
+    // TODO: implement onPointerMove
+    super.onPointerMove(event);
+  }
 }

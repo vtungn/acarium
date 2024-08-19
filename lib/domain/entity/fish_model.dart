@@ -5,7 +5,6 @@ sealed class Fish extends OceanObjModel {
   final double reproduceRate;
   final double spriteScale;
   final double oneFoodIncrease;
-
   final List<FoodType> food;
 
   Fish(

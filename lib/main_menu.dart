@@ -49,7 +49,10 @@ class _MainMenuState extends State<MainMenu> {
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return GameWidget(game: Acarium());
+                              return GameWidget(
+                                game: Acarium(),
+                                mouseCursor: SystemMouseCursors.move,
+                              );
                             }));
                           },
                         ),

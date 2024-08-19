@@ -9,7 +9,8 @@ import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
 
-class Acarium extends FlameGame with HasCollisionDetection, TapDetector {
+class Acarium extends FlameGame
+    with HasCollisionDetection, MouseMovementDetector {
   late final CameraComponent cam;
 
   Acarium({super.children, super.world, super.camera});
@@ -22,21 +23,14 @@ class Acarium extends FlameGame with HasCollisionDetection, TapDetector {
   FutureOr<void> onLoad() async {
     await images.loadAllImages();
     Tank world = Tank();
-    // add(ScreenHitbox());
 
     cam = CameraComponent.withFixedResolution(
         world: world, width: tvWidth, height: tvHeight);
     cam.viewfinder.anchor = Anchor.topLeft;
 
-    // addAll([cam, world]);
-
     await add(FlameBlocProvider<ScoringResourceBloc, ScoringResourceState>(
         create: () => ScoringResourceBloc(), children: [cam, world]));
-    return super.onLoad();
-  }
 
-  @override
-  void onTapDown(TapDownInfo info) {
-    super.onTapDown(info);
+    return super.onLoad();
   }
 }

@@ -3,11 +3,11 @@ import 'dart:math' as math;
 
 import 'package:carium/bloc/scoring/scoring_resource_bloc.dart';
 import 'package:carium/character/fish_component.dart';
+import 'package:carium/character/ocean_obj_component.dart';
 import 'package:carium/config/constants.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 
-import '../character/ocean_obj_component.dart';
 import '../domain/index.dart';
 
 class Tank extends World
@@ -45,7 +45,7 @@ class Tank extends World
     }
     for (var i = 0; i < 1; i++) {
       final fish = FishComponent(
-        fish: Moi(),
+        fish: Maptrang(),
         position:
             Vector2(rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),
         directionVector:

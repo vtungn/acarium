@@ -11,8 +11,6 @@ import 'package:flame/components.dart';
 
 import '../domain/index.dart';
 
-enum FishType { fish1, fish2 }
-
 class FishComponent extends SpriteComponent
     with HasGameRef<Acarium>, CollisionCallbacks, FishMoveMixin {
   final Fish fish;
@@ -22,7 +20,7 @@ class FishComponent extends SpriteComponent
   final fixedDeltaTime = 1 / 60;
   @override
   final hungerDeltaTime = 0.1;
-  final eatDeltaTime = 0.2;
+  final eatDeltaTime = 2;
   Vector2 velocity = Vector2.zero();
   double direction = 0.0;
   Vector2 directionVector;
@@ -31,7 +29,6 @@ class FishComponent extends SpriteComponent
   double separationRadius = 600;
   double updateDirection = 0;
   Vector2 steerFactor = Vector2.zero();
-  // double hunger = 100;
 
   FishComponent(
       {required this.fish,
@@ -47,10 +44,9 @@ class FishComponent extends SpriteComponent
     sprite = Sprite(game.images.fromCache(fish.sprite));
     scale = Vector2.all(scaleFactor);
     hunger = fish.hunger;
-    // anchor = Anchor.center;
+    anchor = Anchor.center;
     add(RectangleHitbox());
-    debugMode = true;
-    add(FoodPellet(foodType: fish.foodType));
+    add(FoodPellet(foodType: fish.foodType, foodSize: size));
     return super.onLoad();
   }
 
@@ -65,9 +61,7 @@ class FishComponent extends SpriteComponent
       accumulateTime -= fixedDeltaTime;
     }
     hungerDrain(dt);
-    if (hunger < 50 && !isRemoved) {
-      seekFood();
-    }
+
     super.update(dt);
   }
 
@@ -75,8 +69,9 @@ class FishComponent extends SpriteComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     accEatTime += dtime;
     while (accEatTime >= eatDeltaTime) {
-      if (other is FoodPellet && fish.food.contains(other.foodType)) {
-        print('eat');
+      if (state == FishState.hungry &&
+          other is FoodPellet &&
+          fish.food.contains(other.foodType)) {
         eatFood();
         other.gotEaten();
       }
@@ -197,6 +192,7 @@ class FishComponent extends SpriteComponent
     }
   }
 
+  @override
   void seekFood() {
     var foodsOnScreen =
         game.descendants().whereType<PositionComponent>().toList();
@@ -238,8 +234,4 @@ class FishComponent extends SpriteComponent
   //     // }
   //   }
   // }
-
-  eatFood() {
-    hunger += 80;
-  }
 }

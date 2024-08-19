@@ -61,7 +61,8 @@ class Maptrang extends Fish {
           hunger: 100,
           reproduceRate: 5,
           sprite: 'maptrang.png',
-          food: [FoodType.seaweed],
+          foodType: FoodType.bigfish,
+          food: [FoodType.smallfish],
         );
 }
 
@@ -71,6 +72,7 @@ class Moi extends Fish {
           hunger: 100,
           reproduceRate: 5,
           sprite: 'moi.png',
+          foodType: FoodType.smallfish,
           food: [FoodType.seaweed],
         );
 }

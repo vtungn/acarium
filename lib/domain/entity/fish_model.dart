@@ -8,8 +8,8 @@ sealed class Fish extends OceanObjModel {
   final List<FoodType> food;
 
   Fish(
-      {this.hungerTime = 0.1,
-      this.reproduceRate = 0.1,
+      {this.hungerTime = 0.2,
+      this.reproduceRate = 10,
       this.spriteScale = 1,
       this.oneFoodIncrease = 80,
       super.foodType = FoodType.notfood,
@@ -22,6 +22,7 @@ class Bapbepxanh extends Fish {
       : super(
           sprite: 'bapnexanh.png',
           // foodType: FoodType.smallfish,
+          hungerTime: 0.2,
           food: [FoodType.seaweed, FoodType.algae],
         );
 }

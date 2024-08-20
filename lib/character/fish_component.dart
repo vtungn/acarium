@@ -44,7 +44,7 @@ class FishComponent extends SpriteComponent
     scaleFactor = fish.spriteScale * (rnd.nextDouble() * 0.2 + 1);
     sprite = Sprite(game.images.fromCache(fish.sprite));
     scale = Vector2.all(scaleFactor);
-    hungerStat = fish.hungerTime;
+    hungerStat = 100;
     oneFoodIncrease = fish.oneFoodIncrease;
     reProduceTimeRate = fish.reproduceRate;
     hungerDeltaTime = fish.hungerTime;
@@ -184,11 +184,11 @@ class FishComponent extends SpriteComponent
       directionVector = newDirection.normalized();
     }
     if (position.y < tankBoundaryMargin) {
-      final newDirection = directionVector + Vector2(0, 1);
+      final newDirection = directionVector + Vector2(0, 0.1);
       directionVector = newDirection.normalized();
     }
     if (position.y > tvHeight - tankBoundaryMargin) {
-      final newDirection = directionVector + Vector2(0, -1);
+      final newDirection = directionVector + Vector2(0, -0.1);
       directionVector = newDirection.normalized();
     }
   }

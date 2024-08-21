@@ -19,6 +19,7 @@ class Tank extends World with HasGameRef<Acarium>, PointerMoveCallbacks {
   @override
   FutureOr<void> onLoad() async {
     add(BackgroundLayer(backgroundImage: 'static/closesea.jpg'));
+    addRock();
     add(back1Layer
       ..add(OceanObjComponent(
           oceanObj: Seaweed1(
@@ -27,8 +28,7 @@ class Tank extends World with HasGameRef<Acarium>, PointerMoveCallbacks {
     add(back2Layer);
     add(FishLayerNear()..add(CrabComponent()));
     add(CloseupLayer());
-    // fishLayerFar();
-    addRock();
+    fishLayerFar();
     return super.onLoad();
   }
 

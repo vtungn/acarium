@@ -50,7 +50,7 @@ class OceanObjComponent extends SpriteComponent
   @override
   void onDragUpdate(DragUpdateEvent event) {
     position += event.localDelta;
-    print(oceanObj.runtimeType.toString() + ':' + position.toString());
+    // print(oceanObj.runtimeType.toString() + ':' + position.toString());
     super.onDragUpdate(event);
   }
 }

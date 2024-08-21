@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:carium/acarium_flame_game.dart';
+import 'package:carium/character/bubble_btn_component.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 
@@ -26,12 +27,19 @@ class CrabComponent extends SpriteAnimationGroupComponent
     current = CrabState.move;
     position = Vector2(game.size.x - 500, game.size.y - 500);
     // scale = Vector2.all(2);
+
+    // add(Spribtn)
     return super.onLoad();
   }
 
   @override
   void onTapDown(TapDownEvent event) {
     current = current == CrabState.move ? CrabState.idle : CrabState.move;
+    if (current == CrabState.idle) {
+      add(BubbleBtnComponent(
+        position: Vector2(-500, -500),
+      ));
+    }
     super.onTapDown(event);
   }
 

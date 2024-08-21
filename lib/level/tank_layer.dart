@@ -33,7 +33,7 @@ class CloseupLayer extends Component with HasGameRef<Acarium> {
   FutureOr<void> onLoad() async {
     final rnd = math.Random();
     add(TimerComponent(
-        period: 1,
+        period: 5,
         repeat: true,
         onTick: () {
           add(BubbleComponent(
@@ -47,7 +47,7 @@ class CloseupLayer extends Component with HasGameRef<Acarium> {
 }
 
 class BubbleComponent extends SpriteComponent with HasGameRef<Acarium> {
-  final double speed = 1000;
+  final double speed = 800;
   BubbleComponent({required super.position});
   @override
   FutureOr<void> onLoad() async {

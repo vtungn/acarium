@@ -59,15 +59,23 @@ class Tank extends World with HasGameRef<Acarium>, PointerMoveCallbacks {
 
   void addRock() {
     // add(OceanObjComponent(oceanObj: Seaweed1(position: Vector2.all(10))));
-    add(OceanObjComponent(oceanObj: Coral2(position: Vector2(3369, 912))));
-    add(OceanObjComponent(oceanObj: Sand3(position: Vector2(0, 1580))));
-    add(OceanObjComponent(oceanObj: Sand1(position: Vector2(1633, 1526))));
-    add(OceanObjComponent(oceanObj: Sand2(position: Vector2(1463, 1882))));
-    add(OceanObjComponent(oceanObj: Coral3(position: Vector2(2828, 1576))));
-    add(OceanObjComponent(oceanObj: Coral1(position: Vector2(-93, 858))));
-    add(OceanObjComponent(oceanObj: Rock3(position: Vector2(2552, 1735))));
-    add(OceanObjComponent(oceanObj: Rock2(position: Vector2(3416, 1515))));
-    add(OceanObjComponent(oceanObj: Rock1(position: Vector2(-188, 1118))));
+    add(OceanObjComponent(
+        oceanObj: Coral2(position: Vector2(3369 / 2, 912 / 2))));
+    add(OceanObjComponent(oceanObj: Sand3(position: Vector2(0, 1580 / 2))));
+    add(OceanObjComponent(
+        oceanObj: Sand1(position: Vector2(1633 / 2, 1526 / 2))));
+    add(OceanObjComponent(
+        oceanObj: Sand2(position: Vector2(1463 / 2, 1882 / 2))));
+    add(OceanObjComponent(
+        oceanObj: Coral3(position: Vector2(2828 / 2, 1576 / 2))));
+    add(OceanObjComponent(
+        oceanObj: Coral1(position: Vector2(-93 / 2, 858 / 2))));
+    add(OceanObjComponent(
+        oceanObj: Rock3(position: Vector2(2552 / 2, 1735 / 2))));
+    add(OceanObjComponent(
+        oceanObj: Rock2(position: Vector2(3416 / 2, 1515 / 2))));
+    add(OceanObjComponent(
+        oceanObj: Rock1(position: Vector2(-188 / 2, 1118 / 2))));
   }
 
   @override

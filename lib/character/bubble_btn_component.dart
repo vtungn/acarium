@@ -17,12 +17,11 @@ class BubbleBtnComponent extends SpriteComponent
     timerText = TextComponent(
         textRenderer: TextPaint(
           style: const TextStyle(
-            fontSize: 128,
+            fontSize: 62,
             color: Colors.black,
           ),
         ),
-        position: Vector2(200, 200),
-        size: Vector2.all(100),
+        position: Vector2(100, 100),
         text: '👋');
     add(timerText);
     return super.onLoad();
@@ -33,7 +32,7 @@ class BubbleBtnComponent extends SpriteComponent
     if (game.qState == QuestState.idle || game.qState == QuestState.questSkip) {
       game.overlays.add('quest');
     } else if (game.qState == QuestState.questSuccess) {
-      game.overlays.add('success');
+      game.overlays.add('quest_success');
     }
     super.onTapUp(event);
   }

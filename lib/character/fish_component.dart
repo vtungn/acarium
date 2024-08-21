@@ -26,9 +26,9 @@ class FishComponent extends SpriteComponent
   Vector2 velocity = Vector2.zero();
   double direction = 0.0;
   Vector2 directionVector;
-  double moveSpeed = 900;
+  double moveSpeed = 200;
   double scaleFactor = 1;
-  double separationRadius = 600;
+  double separationRadius = 300;
   double updateDirection = 0;
   Vector2 steerFactor = Vector2.zero();
   @override

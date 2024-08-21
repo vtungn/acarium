@@ -4,8 +4,10 @@ import 'package:flame/components.dart';
 sealed class OceanStaticModel extends OceanObjModel {
   final Vector2 position;
   final double regenRate;
+  final bool canDrag;
   OceanStaticModel({
     this.regenRate = 0,
+    this.canDrag = true,
     required this.position,
     required super.sprite,
     required super.foodType,
@@ -34,6 +36,7 @@ class Rock1 extends OceanStaticModel {
   Rock1({required super.position})
       : super(
           sprite: 'static/rock1.png',
+          canDrag: false,
           foodType: FoodType.notfood,
         );
 }
@@ -42,6 +45,7 @@ class Rock2 extends OceanStaticModel {
   Rock2({required super.position})
       : super(
           sprite: 'static/rock2.png',
+          canDrag: false,
           foodType: FoodType.notfood,
         );
 }
@@ -50,6 +54,7 @@ class Rock3 extends OceanStaticModel {
   Rock3({required super.position})
       : super(
           sprite: 'static/rock3.png',
+          canDrag: false,
           foodType: FoodType.notfood,
         );
 }
@@ -234,6 +239,7 @@ class CoralLayer1 extends OceanStaticModel {
   CoralLayer1({required super.position})
       : super(
           sprite: 'static/Corallayer1.png',
+          canDrag: false,
           foodType: FoodType.notfood,
         );
 }
@@ -242,6 +248,7 @@ class CoralLayer2 extends OceanStaticModel {
   CoralLayer2({required super.position})
       : super(
           sprite: 'static/Corallayer2.png',
+          canDrag: false,
           regenRate: 0.1,
           foodType: FoodType.seaweed,
         );
@@ -251,6 +258,7 @@ class CoralLayer3 extends OceanStaticModel {
   CoralLayer3({required super.position})
       : super(
           sprite: 'static/Corallayer3.png',
+          canDrag: false,
           regenRate: 0.1,
           foodType: FoodType.seaweed,
         );
@@ -260,6 +268,7 @@ class CoralLayer4 extends OceanStaticModel {
   CoralLayer4({required super.position})
       : super(
           sprite: 'static/Corallayer4.png',
+          canDrag: false,
           foodType: FoodType.notfood,
         );
 }
@@ -268,6 +277,7 @@ class Sand1 extends OceanStaticModel {
   Sand1({required super.position})
       : super(
           sprite: 'static/cat1.png',
+          canDrag: false,
           foodType: FoodType.notfood,
         );
 }
@@ -276,6 +286,7 @@ class Sand2 extends OceanStaticModel {
   Sand2({required super.position})
       : super(
           sprite: 'static/cat2.png',
+          canDrag: false,
           foodType: FoodType.notfood,
         );
 }
@@ -284,6 +295,7 @@ class Sand3 extends OceanStaticModel {
   Sand3({required super.position})
       : super(
           sprite: 'static/cat3.png',
+          canDrag: false,
           foodType: FoodType.notfood,
         );
 }

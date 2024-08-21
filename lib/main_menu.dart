@@ -57,6 +57,8 @@ class _MainMenuState extends State<MainMenu> {
                                 mouseCursor: SystemMouseCursors.move,
                                 overlayBuilderMap: {
                                   'quest': (_, game) => QuestTemplate(game),
+                                  'quest_success': (_, game) =>
+                                      QuestTemplate(game),
                                   'game_over': (_, game) => GameOver(game),
                                 },
                               );

@@ -16,18 +16,18 @@ class CrabComponent extends SpriteAnimationGroupComponent
     final idleSprite = await game.loadSpriteAnimation(
         'anim/crab_idle.png',
         SpriteAnimationData.sequenced(
-            amount: 4, stepTime: 0.3, textureSize: Vector2.all(270)));
+            amount: 4, stepTime: 0.3, textureSize: Vector2.all(135)));
     final moveSprite = await game.loadSpriteAnimation(
         'anim/crab_move.png',
         SpriteAnimationData.sequenced(
-            amount: 4, stepTime: 0.3, textureSize: Vector2.all(270)));
+            amount: 4, stepTime: 0.3, textureSize: Vector2.all(135)));
     animations = {
       CrabState.move: moveSprite,
       CrabState.idle: idleSprite,
     };
 
     current = CrabState.move;
-    position = Vector2(game.size.x - 500, game.size.y - 500);
+    position = Vector2(game.size.x - 200, game.size.y - 200);
     directionVector = Vector2(-1, 0);
 
     // add(Spribtn)
@@ -39,7 +39,7 @@ class CrabComponent extends SpriteAnimationGroupComponent
     current = current == CrabState.move ? CrabState.idle : CrabState.move;
     if (current == CrabState.idle) {
       add(BubbleBtnComponent(
-        position: Vector2(-500, -500),
+        position: Vector2(-230, -230),
       ));
     } else {
       removeWhere((com) => com is BubbleBtnComponent);

@@ -22,12 +22,14 @@ class TankMed extends World {
   }
 
   addRock() {
-    add(OceanObjComponent(oceanObj: CoralLayer1(position: Vector2(0, 1212))));
     add(OceanObjComponent(
-        oceanObj: CoralLayer2(position: Vector2(1269, 1497))));
+        oceanObj: CoralLayer1(position: Vector2(0 / 2, 1212 / 2))));
     add(OceanObjComponent(
-        oceanObj: CoralLayer3(position: Vector2(1882, 1006))));
-    add(OceanObjComponent(oceanObj: CoralLayer4(position: Vector2(2346, 935))));
+        oceanObj: CoralLayer2(position: Vector2(1269 / 2, 1497 / 2))));
+    add(OceanObjComponent(
+        oceanObj: CoralLayer3(position: Vector2(1882 / 2, 1006 / 2))));
+    add(OceanObjComponent(
+        oceanObj: CoralLayer4(position: Vector2(2346 / 2, 935 / 2))));
   }
 
   addFish() {

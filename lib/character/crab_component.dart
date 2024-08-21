@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:carium/acarium_flame_game.dart';
 import 'package:carium/character/bubble_btn_component.dart';
+import 'package:carium/config/constants.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 
@@ -9,6 +10,7 @@ enum CrabState { idle, move }
 
 class CrabComponent extends SpriteAnimationGroupComponent
     with HasGameRef<Acarium>, TapCallbacks {
+  Vector2 directionVector = Vector2.zero();
   @override
   FutureOr<void> onLoad() async {
     final idleSprite = await game.loadSpriteAnimation(
@@ -26,7 +28,7 @@ class CrabComponent extends SpriteAnimationGroupComponent
 
     current = CrabState.move;
     position = Vector2(game.size.x - 500, game.size.y - 500);
-    // scale = Vector2.all(2);
+    directionVector = Vector2(-1, 0);
 
     // add(Spribtn)
     return super.onLoad();
@@ -39,14 +41,29 @@ class CrabComponent extends SpriteAnimationGroupComponent
       add(BubbleBtnComponent(
         position: Vector2(-500, -500),
       ));
+    } else {
+      removeWhere((com) => com is BubbleBtnComponent);
     }
     super.onTapDown(event);
   }
 
+  _tankBoundary() {
+    if (x < 0) {
+      // velocity.x += turnFactor;
+      final newDirection = directionVector + Vector2(1, 0);
+      directionVector = newDirection.normalized();
+    }
+    if (x > tvWidth - size.x) {
+      final newDirection = directionVector + Vector2(-1, 0);
+      directionVector = newDirection.normalized();
+    }
+  }
+
   @override
   void update(double dt) {
+    _tankBoundary();
     if (current == CrabState.move) {
-      x -= dt * 200;
+      x += dt * directionVector.x * 500;
     }
     super.update(dt);
   }

@@ -34,9 +34,10 @@ class QuestTutorial extends QuestModel {
   QuestTutorial()
       : super(
           title: 'Tutorial',
-          description: 'Welcome to Carium!',
+          description:
+              'Welcome to Carium! Here your first step into the deep ocean. ',
           questTimeSec: 10,
-          image: 'quest/tutorial.png',
+          image: 'quest/seaweed1.png',
           requiredObject: [
             {Bapbepxanh(): 1}
           ],

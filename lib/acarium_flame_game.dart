@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:carium/character/food_pellet.dart';
 import 'package:carium/config/constants.dart';
+import 'package:carium/quest/quest_mixin.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -14,10 +15,11 @@ import 'domain/index.dart';
 import 'level/index.dart';
 
 class Acarium extends FlameGame
-    with HasCollisionDetection, MouseMovementDetector {
+    with HasCollisionDetection, MouseMovementDetector, QuestMixin {
   late final CameraComponent cam;
   final FoodPellet plankton =
       FoodPellet(foodType: FoodType.plankton, foodSize: Vector2(10, 10));
+
   @override
   Vector2 get size => Vector2(tvWidth, tvHeight);
 

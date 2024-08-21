@@ -13,6 +13,7 @@ class TankMed extends World {
     add(StaticObjFarLayer());
     add(FishLayerFar());
     add(StaticObjNearLayer());
+    // add
     addRock();
     add(FishLayerNear());
     addFish();

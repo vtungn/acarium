@@ -1,7 +1,10 @@
 import 'package:carium/acarium_flame_game.dart';
+import 'package:carium/quest/game_over.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+
+import 'quest/quest_template.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
@@ -49,9 +52,13 @@ class _MainMenuState extends State<MainMenu> {
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return GameWidget(
+                              return GameWidget<Acarium>(
                                 game: Acarium(),
                                 mouseCursor: SystemMouseCursors.move,
+                                overlayBuilderMap: {
+                                  'quest': (_, game) => QuestTemplate(game),
+                                  'game_over': (_, game) => GameOver(game),
+                                },
                               );
                             }));
                           },
@@ -61,7 +68,14 @@ class _MainMenuState extends State<MainMenu> {
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return GameWidget(game: Acarium());
+                              return GameWidget<Acarium>(
+                                game: Acarium(),
+                                overlayBuilderMap: {
+                                  // 'menu': (_, game) => Menu(game),
+                                  'game_over': (_, game) => GameOver(game),
+                                },
+                                initialActiveOverlays: const ['game_over'],
+                              );
                             }));
                           },
                         ),

@@ -29,7 +29,7 @@ class BubbleBtnComponent extends SpriteComponent
 
   @override
   void onTapUp(TapUpEvent event) {
-    if (game.qState == QuestState.idle || game.qState == QuestState.questSkip) {
+    if (game.qState == QuestState.newQuestAvailable) {
       game.overlays.add('quest');
     } else if (game.qState == QuestState.questSuccess) {
       game.overlays.add('quest_success');

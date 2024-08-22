@@ -1,10 +1,8 @@
 import 'package:carium/acarium_flame_game.dart';
-import 'package:carium/quest/game_over.dart';
+import 'package:carium/quest/index.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-
-import 'quest/quest_template.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
@@ -58,8 +56,10 @@ class _MainMenuState extends State<MainMenu> {
                                 overlayBuilderMap: {
                                   'quest': (_, game) => QuestTemplate(game),
                                   'quest_success': (_, game) =>
-                                      QuestTemplate(game),
+                                      YouwinDialog(game),
                                   'game_over': (_, game) => GameOver(game),
+                                  'quest_fail_require': (_, game) =>
+                                      WarningDialog(game),
                                 },
                               );
                             }));
@@ -68,17 +68,7 @@ class _MainMenuState extends State<MainMenu> {
                         _TextBtnMenu(
                           text: 'Settings',
                           onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return GameWidget<Acarium>(
-                                game: Acarium(),
-                                overlayBuilderMap: {
-                                  // 'menu': (_, game) => Menu(game),
-                                  'game_over': (_, game) => GameOver(game),
-                                },
-                                initialActiveOverlays: const ['game_over'],
-                              );
-                            }));
+                            // show the overlay settings
                           },
                         ),
                       ],

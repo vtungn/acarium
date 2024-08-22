@@ -18,8 +18,8 @@ sealed class QuestModel {
   final String description;
   final String? image;
   final int questTimeSec;
-  final List<Map<OceanObjModel, int>> requiredObject;
-  final List<Map<OceanObjModel, int>> reward;
+  final Map<OceanObjModel, int> requiredObject;
+  final Map<OceanObjModel, int> reward;
 
   QuestModel(
       {required this.title,
@@ -33,16 +33,12 @@ sealed class QuestModel {
 class QuestTutorial extends QuestModel {
   QuestTutorial()
       : super(
-          title: 'Tutorial',
+          title: 'Feeding Frenzy',
           description:
-              'Welcome to Carium! Here your first step into the deep ocean. ',
+              'Seaweed is a source of food for your fish, and can regrow. Send you fish for an adventure to find the source of seaweed for your fish!',
           questTimeSec: 10,
-          image: 'quest/seaweed1.png',
-          requiredObject: [
-            {Bapbepxanh(): 1}
-          ],
-          reward: [
-            {Seaweed1(position: Vector2.all(10)): 1}
-          ],
+          image: 'assets/images/quest/seaweed1.png',
+          requiredObject: {Ngua(): 1},
+          reward: {Seaweed1(position: Vector2.all(10)): 1},
         );
 }

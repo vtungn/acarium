@@ -15,7 +15,7 @@ class QuestTemplate extends StatelessWidget {
     return Center(
         child: Dialog(
       child: SizedBox(
-        width: 100,
+        width: 500,
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -26,7 +26,31 @@ class QuestTemplate extends StatelessWidget {
                 style: const TextStyle(fontSize: 18),
               ),
               const SizedBox(height: 12),
-              Text(questShow.description),
+              Row(
+                children: [
+                  if (questShow.image != null)
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.asset(
+                            'assets/images/quest/questbg.jpg',
+                            width: 70,
+                            height: 70,
+                          ),
+                        ),
+                        Image.asset(
+                          questShow.image!,
+                          width: 50,
+                          height: 50,
+                        ),
+                      ],
+                    ),
+                  const SizedBox(width: 12),
+                  Expanded(child: Text(questShow.description)),
+                ],
+              ),
               const SizedBox(height: 12),
               Text('Quest duration: ${questShow.questTimeSec}s'),
               const SizedBox(height: 12),
@@ -34,7 +58,7 @@ class QuestTemplate extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: game.nextQuestPress,
+                    onPressed: game.doneAndWaitNextQuest,
                     child: const Text('Skip'),
                   ),
                   ElevatedButton(

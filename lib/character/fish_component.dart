@@ -46,7 +46,7 @@ class FishComponent extends SpriteComponent
     scaleFactor = fish.spriteScale * (rnd.nextDouble() * 0.2 + 1);
     sprite = Sprite(game.images.fromCache(fish.sprite));
     scale = Vector2.all(scaleFactor);
-    hungerStat = 100;
+    hungerStat = fish.hunger;
     oneFoodIncrease = fish.oneFoodIncrease;
     reProduceTimeRate = fish.reproduceRate;
     hungerDeltaTime = fish.hungerTime;

@@ -177,6 +177,7 @@ List<QuestModel> questsSmallAqua = [
   QuestTutorial(),
   SmallQuest1(),
   SmallQuest2(),
+  SmallQuest3(),
 ];
 List questsMedAqua = [];
 
@@ -187,4 +188,5 @@ enum QuestState {
   questSuccess,
   questFailed,
   questSkip,
+  gameover,
 }

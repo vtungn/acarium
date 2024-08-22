@@ -67,10 +67,10 @@ class SmallQuest2 extends QuestModel {
           description:
               "Whispers tell of a mysterious fish that only appears under specific conditions. Venture to the moonlit shores of the Whispering Lagoon, where the water shimmers with an ethereal glow. Solve the ancient puzzle hidden within the coral formations to lure the enigmatic fish into your nets. Capture this rare species to add an air of mystery and allure to your aquarium, drawing the awe of all who see it",
           questTimeSec: 10,
-          image: 'assets/quest/qmark.png',
+          image: 'assets/images/quest/qmark.png',
           requiredObject: {Moi(): 2},
           reward: {
-            Maptrang(): 1,
+            Maptrang(hunger: 25): 1,
           },
         );
 }

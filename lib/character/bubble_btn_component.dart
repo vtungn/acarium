@@ -49,6 +49,8 @@ class BubbleBtnComponent extends SpriteComponent
       timerText.text = '🏆';
     } else if (game.qState == QuestState.questSkip) {
       timerText.text = '⏭️';
+    } else if (game.qState == QuestState.gameover) {
+      timerText.text = '💀';
     }
     super.update(dt);
   }

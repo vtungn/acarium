@@ -22,7 +22,7 @@ class GameOver extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              'Time: ',
+              'All fish is dead or left the aquarium',
               style: textTheme.bodyLarge,
             ),
             const SizedBox(height: 10),

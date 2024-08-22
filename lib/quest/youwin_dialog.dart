@@ -38,7 +38,8 @@ class YouwinDialog extends StatelessWidget {
                         height: 150,
                       ),
                     ),
-                    Image.asset(questShow.image!),
+                    Image.asset(
+                        'assets/images/${questShow.reward.keys.first.sprite}'),
                   ],
                 ),
               const SizedBox(height: 12),

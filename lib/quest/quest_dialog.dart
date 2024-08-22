@@ -73,11 +73,11 @@ class QuestTemplate extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: game.doneAndWaitNextQuest,
-                    child: const Text('Skip'),
+                    child: const Text('Nah skip this'),
                   ),
                   ElevatedButton(
                     onPressed: game.startQuest,
-                    child: const Text('Start'),
+                    child: const Text("Let's do it"),
                   ),
                 ],
               ),

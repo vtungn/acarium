@@ -6,6 +6,7 @@ import 'package:carium/character/crab_component.dart';
 import 'package:carium/character/fish_component.dart';
 import 'package:carium/character/ocean_obj_component.dart';
 import 'package:carium/config/constants.dart';
+import 'package:carium/quest/quest_mixin.dart';
 import 'package:flame/components.dart';
 
 import '../domain/index.dart';
@@ -80,6 +81,7 @@ class Tank extends World with HasGameRef<Acarium> {
     final checkEndGame = game.descendants().whereType<FishComponent>();
     if (checkEndGame.isEmpty) {
       game.overlays.add('game_over');
+      game.qState = QuestState.gameover;
     }
     super.update(dt);
   }

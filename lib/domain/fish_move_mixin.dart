@@ -13,6 +13,7 @@ mixin FishMoveMixin on SpriteComponent {
   double get hungerDeltaTime;
   double get reProduceTimeRate;
   double get oneFoodIncrease;
+  int get boidsCount;
   FishState state = FishState.idle;
 
   @override
@@ -23,6 +24,7 @@ mixin FishMoveMixin on SpriteComponent {
   }
 
   produceGain(double dt) {
+    if (boidsCount > 20) return;
     accReproduceTime += dt;
     while (accReproduceTime >= reProduceTimeRate) {
       accReproduceTime -= reProduceTimeRate;

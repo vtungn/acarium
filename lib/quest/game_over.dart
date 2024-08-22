@@ -12,10 +12,12 @@ class GameOver extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: Center(
-        child: Wrap(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Player  wins!',
+              'Game Over',
               style: textTheme.displayLarge,
             ),
             const SizedBox(height: 10),
@@ -25,7 +27,9 @@ class GameOver extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               child: const Text('Restart'),
             ),
           ],

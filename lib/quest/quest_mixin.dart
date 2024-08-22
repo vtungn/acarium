@@ -19,10 +19,12 @@ mixin QuestMixin on FlameGame {
   double questDt = 0;
   TimerComponent? timer;
   QuestModel? currentQuest;
+  // List<QuestModel> questList = [];
   final nextQuestTimer = Timer(secBtwQuest);
 
   @override
   FutureOr<void> onLoad() {
+    // questList = questsSmallAqua;
     prepareNextQuest();
     nextQuestTimer.onTick = () {
       qState = QuestState.newQuestAvailable;
@@ -154,6 +156,7 @@ mixin QuestMixin on FlameGame {
     overlays.remove('quest_success');
     overlays.remove('quest_fail_require');
     overlays.remove('quest');
+
     qState = QuestState.idle;
     final crab = descendants().whereType<CrabComponent>().first;
     crab.removeWhere((com) => com is BubbleBtnComponent);
@@ -163,6 +166,7 @@ mixin QuestMixin on FlameGame {
   void prepareNextQuest({bool firstQuest = false}) {
     if (qState != QuestState.idle) return;
     final newQuest = firstQuest ? QuestTutorial() : questsSmallAqua.random();
+    questsSmallAqua.remove(newQuest);
     nextQuest = newQuest;
     nextQuestTimer.reset();
     nextQuestTimer.start();
@@ -171,6 +175,8 @@ mixin QuestMixin on FlameGame {
 
 List<QuestModel> questsSmallAqua = [
   QuestTutorial(),
+  SmallQuest1(),
+  SmallQuest2(),
 ];
 List questsMedAqua = [];
 

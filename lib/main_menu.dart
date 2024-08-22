@@ -48,21 +48,26 @@ class _MainMenuState extends State<MainMenu> {
                         _TextBtnMenu(
                           text: 'New game',
                           onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return GameWidget<Acarium>(
-                                game: Acarium(),
-                                mouseCursor: SystemMouseCursors.move,
-                                overlayBuilderMap: {
-                                  'quest': (_, game) => QuestTemplate(game),
-                                  'quest_success': (_, game) =>
-                                      YouwinDialog(game),
-                                  'game_over': (_, game) => GameOver(game),
-                                  'quest_fail_require': (_, game) =>
-                                      WarningDialog(game),
-                                },
-                              );
-                            }));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) {
+                                      return GameWidget<Acarium>(
+                                        game: Acarium(),
+                                        mouseCursor: SystemMouseCursors.move,
+                                        overlayBuilderMap: {
+                                          'quest': (_, game) =>
+                                              QuestTemplate(game),
+                                          'quest_success': (_, game) =>
+                                              YouwinDialog(game),
+                                          'game_over': (_, game) =>
+                                              GameOver(game),
+                                          'quest_fail_require': (_, game) =>
+                                              WarningDialog(game),
+                                        },
+                                      );
+                                    },
+                                    maintainState: false));
                           },
                         ),
                         _TextBtnMenu(

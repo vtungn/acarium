@@ -9,7 +9,7 @@ sealed class Fish extends OceanObjModel {
 
   Fish(
       {this.hungerTime = 0.2,
-      this.reproduceRate = 10,
+      this.reproduceRate = 5,
       this.spriteScale = 1,
       this.oneFoodIncrease = 80,
       super.foodType = FoodType.notfood,
@@ -65,6 +65,7 @@ class Moi extends Fish {
   Moi()
       : super(
           sprite: 'moi.png',
+          reproduceRate: 0.3,
           foodType: FoodType.smallfish,
           food: [FoodType.seaweed],
         );

@@ -10,7 +10,6 @@ class WarningDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final questShow = game.nextQuest;
     return Center(
         child: Dialog(
       child: SizedBox(

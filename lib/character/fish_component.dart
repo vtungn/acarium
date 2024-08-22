@@ -32,6 +32,8 @@ class FishComponent extends SpriteComponent
   double updateDirection = 0;
   Vector2 steerFactor = Vector2.zero();
   @override
+  int boidsCount = 0;
+  @override
   late double oneFoodIncrease = 80;
 
   FishComponent(
@@ -98,6 +100,7 @@ class FishComponent extends SpriteComponent
     boids = boids
         .where((other) => other.fish.runtimeType == fish.runtimeType)
         .toList();
+    boidsCount = boids.length;
     if (boids.isEmpty) return;
     var separation = Vector2.zero();
     for (var boid in boids) {

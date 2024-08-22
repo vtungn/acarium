@@ -38,7 +38,7 @@ class QuestTutorial extends QuestModel {
               'Seaweed is a source of food for your fish, and can regrow. Send you fish for an adventure to find the source of seaweed for your fish!',
           questTimeSec: 10,
           image: 'assets/images/quest/seaweed1.png',
-          requiredObject: {Ngua(): 1},
+          requiredObject: {Ngua(): 4},
           reward: {Seaweed1(position: Vector2.all(10)): 1},
         );
 }

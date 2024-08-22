@@ -27,7 +27,7 @@ class CrabComponent extends SpriteAnimationGroupComponent
     };
 
     current = CrabState.move;
-    position = Vector2(game.size.x + 500, game.size.y + 500);
+    position = Vector2(game.size.x + 500, game.size.y - 200);
     initQuestIntro.start();
     initQuestIntro.onTick = () {
       directionVector = Vector2(-1, 0);

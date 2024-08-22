@@ -45,6 +45,7 @@ mixin QuestMixin on FlameGame {
     currentQuest = nextQuest;
     if (questCost()) {
       qState = QuestState.questStarted;
+      sendTroopToFinishQuest();
       timerDisplay = currentQuest!.questTimeSec;
       timer = TimerComponent(
           period: nextQuest.questTimeSec.toDouble(),
@@ -58,40 +59,92 @@ mixin QuestMixin on FlameGame {
   }
 
   rewardToGame() {
+    overlays.add('quest_success');
     for (var oceanObj in currentQuest!.reward.keys) {
-      // final type = element.keys;
+      final rewardAmount = currentQuest!.reward[oceanObj]!;
       if (oceanObj is OceanStaticModel) {
         final staticClose = descendants().whereType<StaticObjNearLayer>().first;
-        staticClose.add(OceanObjComponent(oceanObj: oceanObj));
+        for (var i = 0; i < rewardAmount; i++) {
+          staticClose.add(OceanObjComponent(oceanObj: oceanObj));
+        }
       }
       if (oceanObj is Fish) {
         final fishClose = descendants().whereType<FishLayerNear>().first;
         final rnd = Random();
-        fishClose.add(FishComponent(
-          fish: oceanObj,
-          position:
-              Vector2(rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),
-          directionVector:
-              Vector2(rnd.nextDouble() * 1 - 0.5, rnd.nextDouble() * 1 - 0.5),
-        ));
+        for (var i = 0; i < rewardAmount; i++) {
+          fishClose.add(FishComponent(
+            fish: oceanObj,
+            position: Vector2(
+                rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),
+            directionVector:
+                Vector2(rnd.nextDouble() * 1 - 0.5, rnd.nextDouble() * 1 - 0.5),
+          ));
+        }
       }
+    }
+    for (var oceanObj in currentQuest!.requiredObject.keys) {
+      final returnAmount = currentQuest!.requiredObject[oceanObj]!;
+      if (oceanObj is OceanStaticModel) {
+        final staticClose = descendants().whereType<StaticObjNearLayer>().first;
+        for (var i = 0; i < returnAmount; i++) {
+          staticClose.add(OceanObjComponent(oceanObj: oceanObj));
+        }
+      }
+      if (oceanObj is Fish) {
+        final fishClose = descendants().whereType<FishLayerNear>().first;
+        final rnd = Random();
+        for (var i = 0; i < returnAmount; i++) {
+          fishClose.add(FishComponent(
+            fish: oceanObj,
+            position: Vector2(
+                rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),
+            directionVector:
+                Vector2(rnd.nextDouble() * 1 - 0.5, rnd.nextDouble() * 1 - 0.5),
+          ));
+        }
+      }
+    }
+  }
+
+  void sendTroopToFinishQuest() {
+    for (var type in currentQuest!.requiredObject.keys) {
+      // final type = element.keys;
+      var questAmount = currentQuest!.requiredObject[type]!;
+      descendants()
+          .where((obj) {
+            if (obj is FishComponent) {
+              return obj.fish.runtimeType == type.runtimeType;
+            }
+            if (obj is OceanObjComponent) {
+              return obj.oceanObj.runtimeType == type.runtimeType;
+            }
+            return false;
+          })
+          .take(questAmount)
+          .map((ele) => ele.removeFromParent());
     }
   }
 
   bool questCost() {
     for (var type in currentQuest!.requiredObject.keys) {
       // final type = element.keys;
-      final questAmount = currentQuest!.requiredObject[type]!;
-      final tankAmount =
-          descendants().where((obj) => obj.runtimeType == type.runtimeType);
+      var questAmount = currentQuest!.requiredObject[type]!;
+      final tankAmount = descendants().where((obj) {
+        if (obj is FishComponent) {
+          return obj.fish.runtimeType == type.runtimeType;
+        }
+        if (obj is OceanObjComponent) {
+          return obj.oceanObj.runtimeType == type.runtimeType;
+        }
+        return false;
+      });
+
       if (questAmount > tankAmount.length) {
         overlays.add('quest_fail_require');
         return false;
       }
-      tankAmount
-          .take(questAmount)
-          .map((oceanElement) => oceanElement.removeFromParent());
     }
+
     return true;
   }
 
@@ -100,14 +153,17 @@ mixin QuestMixin on FlameGame {
     overlays.remove('quest_fail_require');
     overlays.remove('quest');
     qState = QuestState.idle;
-    removeWhere((com) => com is BubbleBtnComponent);
+    final crab = descendants().whereType<CrabComponent>().first;
+    crab.removeWhere((com) => com is BubbleBtnComponent);
     prepareNextQuest();
   }
 
-  void prepareNextQuest({double? questTime}) {
+  void prepareNextQuest({bool firstQuest = false}) {
     if (qState != QuestState.idle) return;
-    final newQuest = questsSmallAqua.random();
+    final newQuest = firstQuest ? QuestTutorial() : questsSmallAqua.random();
     nextQuest = newQuest;
+    nextQuestTimer.reset();
+    nextQuestTimer.start();
   }
 }
 

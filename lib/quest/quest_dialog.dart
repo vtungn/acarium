@@ -52,6 +52,20 @@ class QuestTemplate extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 12),
+              const Text('Quest required:'),
+              ...questShow.requiredObject.keys.map((e) => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(questShow.requiredObject[e].toString()),
+                      Image.asset(
+                        'assets/images/${e.sprite}',
+                        width: 20,
+                        height: 20,
+                      ),
+                    ],
+                  )),
+              const SizedBox(height: 12),
               Text('Quest duration: ${questShow.questTimeSec}s'),
               const SizedBox(height: 12),
               Row(

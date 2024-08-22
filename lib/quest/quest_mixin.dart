@@ -106,22 +106,24 @@ mixin QuestMixin on FlameGame {
     }
   }
 
-  void sendTroopToFinishQuest() {
+  Future sendTroopToFinishQuest() async {
     for (var type in currentQuest!.requiredObject.keys) {
       // final type = element.keys;
       var questAmount = currentQuest!.requiredObject[type]!;
-      descendants()
-          .where((obj) {
-            if (obj is FishComponent) {
-              return obj.fish.runtimeType == type.runtimeType;
-            }
-            if (obj is OceanObjComponent) {
-              return obj.oceanObj.runtimeType == type.runtimeType;
-            }
-            return false;
-          })
-          .take(questAmount)
-          .map((ele) => ele.removeFromParent());
+
+      for (var i = 0; i < questAmount; i++) {
+        final eliminate = descendants().firstWhere((obj) {
+          if (obj is FishComponent) {
+            return obj.fish.runtimeType == type.runtimeType;
+          }
+          if (obj is OceanObjComponent) {
+            return obj.oceanObj.runtimeType == type.runtimeType;
+          }
+          return false;
+        });
+        eliminate.removeFromParent();
+        await eliminate.removed;
+      }
     }
   }
 

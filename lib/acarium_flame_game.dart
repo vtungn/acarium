@@ -17,6 +17,7 @@ import 'level/index.dart';
 class Acarium extends FlameGame
     with HasCollisionDetection, MouseMovementDetector, QuestMixin {
   late final CameraComponent cam;
+  late World tank;
   final FoodPellet plankton =
       FoodPellet(foodType: FoodType.plankton, foodSize: Vector2(10, 10));
 
@@ -37,15 +38,29 @@ class Acarium extends FlameGame
   @override
   FutureOr<void> onLoad() async {
     await images.loadAllImages();
-    Tank world = Tank();
-
-    cam = CameraComponent.withFixedResolution(
-        world: world, width: tvWidth, height: tvHeight);
-    cam.viewfinder.anchor = Anchor.topLeft;
-
-    addAll([cam, world]);
+    tank = Tank();
+    renderCam();
 
     return super.onLoad();
+  }
+
+  @override
+  void renderMedTank() {
+    removeWhere((compnent) => compnent is Tank);
+    tank = TankMed();
+    cam.world = tank;
+    add(tank);
+    // renderCam();
+  }
+
+  void renderCam() {
+    Future.delayed(const Duration(seconds: 1), () {
+      cam = CameraComponent.withFixedResolution(
+          world: tank, width: tvWidth, height: tvHeight);
+      cam.viewfinder.anchor = Anchor.topLeft;
+
+      addAll([cam, tank]);
+    });
   }
 
   @override

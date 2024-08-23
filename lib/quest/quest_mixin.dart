@@ -19,12 +19,12 @@ mixin QuestMixin on FlameGame {
   double questDt = 0;
   TimerComponent? timer;
   QuestModel? currentQuest;
+  int questCount = 0;
   // List<QuestModel> questList = [];
   final nextQuestTimer = Timer(secBtwQuest);
 
   @override
   FutureOr<void> onLoad() {
-    // questList = questsSmallAqua;
     prepareNextQuest();
     nextQuestTimer.onTick = () {
       qState = QuestState.newQuestAvailable;
@@ -62,6 +62,10 @@ mixin QuestMixin on FlameGame {
 
   rewardToGame() {
     overlays.add('quest_success');
+    if (currentQuest is MedQuestNavigate) {
+      renderMedTank();
+      return;
+    }
     for (var oceanObj in currentQuest!.reward.keys) {
       final rewardAmount = currentQuest!.reward[oceanObj]!;
       if (oceanObj is OceanStaticModel) {
@@ -158,19 +162,32 @@ mixin QuestMixin on FlameGame {
     overlays.remove('quest');
 
     qState = QuestState.idle;
-    final crab = descendants().whereType<CrabComponent>().first;
-    crab.removeWhere((com) => com is BubbleBtnComponent);
+    if (currentQuest is! MedQuestNavigate) {
+      final crab = descendants().whereType<CrabComponent>().first;
+      crab.removeWhere((com) => com is BubbleBtnComponent);
+    }
     prepareNextQuest();
   }
 
-  void prepareNextQuest({bool firstQuest = false}) {
+  void prepareNextQuest() {
     if (qState != QuestState.idle) return;
-    final newQuest = firstQuest ? QuestTutorial() : questsSmallAqua.random();
-    questsSmallAqua.remove(newQuest);
+    QuestModel newQuest;
+    if (questCount > 3) {
+      newQuest = MedQuestNavigate();
+    } else if (questCount < 3) {
+      newQuest =
+          questCount == 0 ? MedQuestNavigate() : questsSmallAqua.random();
+    } else {
+      newQuest = questsMedAqua.random();
+    }
     nextQuest = newQuest;
+    questCount++;
+
     nextQuestTimer.reset();
     nextQuestTimer.start();
   }
+
+  renderMedTank();
 }
 
 List<QuestModel> questsSmallAqua = [
@@ -179,7 +196,12 @@ List<QuestModel> questsSmallAqua = [
   SmallQuest2(),
   SmallQuest3(),
 ];
-List questsMedAqua = [];
+List<QuestModel> questsMedAqua = [
+  MedQuest3(),
+  MedQuest4(),
+  MedQuest5(),
+  MedQuest6(),
+];
 
 enum QuestState {
   idle,

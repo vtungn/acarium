@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:carium/character/crab_component.dart';
 import 'package:carium/character/fish_component.dart';
 import 'package:carium/character/ocean_obj_component.dart';
 import 'package:carium/domain/index.dart';
@@ -15,7 +16,7 @@ class TankMed extends World {
     add(StaticObjNearLayer());
     // add
     addRock();
-    add(FishLayerNear());
+    add(FishLayerNear()..add(CrabComponent()));
     addFish();
     add(CloseupLayer());
     return super.onLoad();

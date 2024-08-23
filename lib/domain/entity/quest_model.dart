@@ -101,14 +101,13 @@ class MedQuestNavigate extends QuestModel {
           questTimeSec: 20,
           image: 'assets/images/static/Corallayer3.png',
           requiredObject: {
-            Moi(): 10,
-            Duoigai(): 1,
-            Buommonhon(): 1,
+            // TODO: if this too hard we hard code the number of fish
+            Moi(): 1,
+            // Duoigai(): 1,
+            // Buommonhon(): 1,
           },
           reward: {
             Coral1(position: Vector2(-93 / 2, 858 / 2)): 1,
-            Coral2(position: Vector2(3369 / 2, 912 / 2)): 1,
-            Coral3(position: Vector2(2828 / 2, 1576 / 2)): 1,
           },
         );
 }
@@ -132,6 +131,40 @@ class MedQuest3 extends QuestModel {
 
 class MedQuest4 extends QuestModel {
   MedQuest4()
+      : super(
+          title: 'The Lost Pearl',
+          description:
+              "Rumors speak of a legendary pearl hidden deep within the coral caves of the Abyssal Trench. Ancient guardians protect it, and only the bravest can retrieve it. Navigate the treacherous waters, avoid the lurking predators, and bring back the Lost Pearl to prove your worth to the Ocean King",
+          questTimeSec: 10,
+          image: 'assets/images/static/coral2.png',
+          requiredObject: {Moi(): 5},
+          reward: {
+            Coral1(position: Vector2(-93 / 2, 858 / 2)): 1,
+            Coral2(position: Vector2(3369 / 2, 912 / 2)): 1,
+            Coral3(position: Vector2(2828 / 2, 1576 / 2)): 1,
+          },
+        );
+}
+
+class MedQuest5 extends QuestModel {
+  MedQuest5()
+      : super(
+          title: 'The Lost Pearl',
+          description:
+              "Rumors speak of a legendary pearl hidden deep within the coral caves of the Abyssal Trench. Ancient guardians protect it, and only the bravest can retrieve it. Navigate the treacherous waters, avoid the lurking predators, and bring back the Lost Pearl to prove your worth to the Ocean King",
+          questTimeSec: 10,
+          image: 'assets/images/static/coral2.png',
+          requiredObject: {Moi(): 5},
+          reward: {
+            Coral1(position: Vector2(-93 / 2, 858 / 2)): 1,
+            Coral2(position: Vector2(3369 / 2, 912 / 2)): 1,
+            Coral3(position: Vector2(2828 / 2, 1576 / 2)): 1,
+          },
+        );
+}
+
+class MedQuest6 extends QuestModel {
+  MedQuest6()
       : super(
           title: 'The Lost Pearl',
           description:

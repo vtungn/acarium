@@ -158,10 +158,17 @@ mixin QuestMixin on FlameGame {
     return true;
   }
 
-  void doneAndWaitNextQuest({bool isWin = false}) {
+  void doneAndWaitNextQuest() {
+    // you receive done
     overlays.remove('quest_success');
+    // not enough warning
     overlays.remove('quest_fail_require');
+    // skip press
     overlays.remove('quest');
+
+    if (currentQuest is SmallQuest2) {
+      successedQuest.add(currentQuest!);
+    }
 
     qState = QuestState.idle;
     if (currentQuest is! MedQuestNavigate) {
@@ -174,17 +181,22 @@ mixin QuestMixin on FlameGame {
   void prepareNextQuest() {
     if (qState != QuestState.idle) return;
     QuestModel newQuest;
-    if (questCount > 3) {
-      newQuest = MedQuestNavigate();
-    } else if (questCount < 3) {
-      // newQuest =
-      //     questCount == 0 ? MedQuestNavigate() : questsSmallAqua.random();
-      newQuest = SmallQuest2();
+    final currentTank = descendants().whereType<World>().first;
+    if (currentTank is Tank) {
+      // small quest
+      final playalbleQuest = questsSmallAqua
+          .where((quest) => quest.canReplay || !successedQuest.contains(quest));
+      newQuest =
+          questCount == 0 ? QuestTutorial() : playalbleQuest.toList().random();
     } else {
-      newQuest = questsMedAqua.random();
+      // ocean quest
+      newQuest = questsMedAqua
+          .where((quest) => quest.canReplay || !successedQuest.contains(quest))
+          .toList()
+          .random();
     }
     nextQuest = newQuest;
-
+    questCount++;
     nextQuestTimer.reset();
     nextQuestTimer.start();
   }

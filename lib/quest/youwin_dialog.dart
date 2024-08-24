@@ -53,7 +53,7 @@ class YouwinDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () => game.doneAndWaitNextQuest(isWin: true),
+                    onPressed: game.doneAndWaitNextQuest,
                     child: const Text('Done'),
                   ),
                 ],

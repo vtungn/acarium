@@ -1,18 +1,22 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:carium/character/crab_component.dart';
 import 'package:carium/character/fish_component.dart';
 import 'package:carium/character/ocean_obj_component.dart';
+import 'package:carium/config/constants.dart';
 import 'package:carium/domain/index.dart';
 import 'package:carium/level/tank_layer.dart';
 import 'package:flame/components.dart';
 
 class TankMed extends World {
+  final fish1Layer = FishLayerFar();
   @override
   FutureOr<void> onLoad() {
     add(BackgroundLayer(backgroundImage: 'static/farsea.jpg'));
     add(StaticObjFarLayer());
-    add(FishLayerFar());
+    add(fish1Layer);
+    // TODO: add blue filter
     add(StaticObjNearLayer());
     // add
     addRock();
@@ -42,9 +46,18 @@ class TankMed extends World {
         fish: Maotien(),
         position: Vector2.all(10),
         directionVector: Vector2.all(10)));
-    add(FishComponent(
-        fish: Maotien(),
-        position: Vector2.all(10),
-        directionVector: Vector2.all(10)));
+
+    var rnd = math.Random();
+    for (var i = 0; i < 10; i++) {
+      final fish = FishComponent(
+        fish: Thu(speedA: 0.5, spriteScale: 0.4),
+        position:
+            Vector2(rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),
+        directionVector:
+            Vector2(rnd.nextDouble() * 1 - 0.5, rnd.nextDouble() * 1 - 0.5),
+        // direction: 0,
+      );
+      fish1Layer.add(fish);
+    }
   }
 }

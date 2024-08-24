@@ -32,7 +32,7 @@ class Bapbepxanh extends Fish {
 }
 
 class Buommonhon extends Fish {
-  Buommonhon()
+  Buommonhon({super.spriteScale})
       : super(
           sprite: 'buommonhon.png',
           food: [FoodType.seaweed, FoodType.plankton],
@@ -62,8 +62,8 @@ class Maptrang extends Fish {
     super.oneFoodIncrease = 10,
   }) : super(
           sprite: 'maptrang.png',
-          foodType: FoodType.bigfish,
-          food: [FoodType.smallfish],
+          foodType: FoodType.notfood,
+          food: [FoodType.smallfish, FoodType.bigfish],
         );
 }
 
@@ -89,6 +89,7 @@ class Nguvayvang extends Fish {
   Nguvayvang()
       : super(
           sprite: 'nguvayvang.png',
+          reproduceRate: 10,
           food: [FoodType.seaweed],
         );
 }
@@ -97,7 +98,8 @@ class Nguvayxanh extends Fish {
   Nguvayxanh()
       : super(
           sprite: 'nguvayxanh.png',
-          food: [FoodType.seaweed],
+          reproduceRate: 10,
+          food: [FoodType.smallfish],
         );
 }
 
@@ -105,14 +107,15 @@ class Thantien extends Fish {
   Thantien()
       : super(
           sprite: 'thantien.png',
-          food: [FoodType.seaweed],
+          food: [FoodType.smallfish],
         );
 }
 
 class Thu extends Fish {
-  Thu()
+  Thu({super.speedA = 1, super.spriteScale = 0.5})
       : super(
           sprite: 'thu.png',
+          foodType: FoodType.smallfish,
           food: [FoodType.seaweed],
         );
 }

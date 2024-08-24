@@ -38,8 +38,6 @@ class Acarium extends FlameGame
 
   @override
   FutureOr<void> onLoad() async {
-    FlameAudio.bgm.initialize();
-
     await images.loadAllImages();
     tank = Tank();
     cam = CameraComponent.withFixedResolution(
@@ -47,8 +45,7 @@ class Acarium extends FlameGame
     cam.viewfinder.anchor = Anchor.topLeft;
 
     addAll([cam, tank]);
-    // FlameAudio.loopLongAudio('audio/Void Ocean Lama House.mp3');
-    FlameAudio.bgm.play('Void-Ocean.mp3', volume: .5);
+
     return super.onLoad();
   }
 

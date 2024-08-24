@@ -1,6 +1,7 @@
 import 'package:carium/acarium_flame_game.dart';
 import 'package:carium/quest/index.dart';
 import 'package:flame/game.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -16,6 +17,8 @@ class _MainMenuState extends State<MainMenu> {
   @override
   void initState() {
     super.initState();
+    FlameAudio.bgm.initialize();
+    FlameAudio.bgm.play('nobody.mp3');
     _controller = VideoPlayerController.asset('assets/main_menu.mp4',
         videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true))
       ..initialize().then((_) {
@@ -25,6 +28,12 @@ class _MainMenuState extends State<MainMenu> {
 
         setState(() {});
       });
+  }
+
+  @override
+  void dispose() {
+    FlameAudio.bgm.dispose();
+    super.dispose();
   }
 
   @override

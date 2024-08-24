@@ -8,6 +8,7 @@ import 'package:carium/character/ocean_obj_component.dart';
 import 'package:carium/config/constants.dart';
 import 'package:carium/quest/quest_mixin.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 
 import '../domain/index.dart';
 import 'tank_layer.dart';
@@ -18,6 +19,7 @@ class Tank extends World with HasGameRef<Acarium> {
   final back2Layer = StaticObjNearLayer();
   @override
   FutureOr<void> onLoad() async {
+    FlameAudio.bgm.play('voidocean.mp3', volume: .5);
     add(BackgroundLayer(backgroundImage: 'static/closesea.jpg'));
     addRock();
     add(back1Layer);

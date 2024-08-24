@@ -181,7 +181,8 @@ mixin QuestMixin on FlameGame {
   void prepareNextQuest() {
     if (qState != QuestState.idle) return;
     QuestModel newQuest;
-    final currentTank = descendants().whereType<World>().first;
+    final tanks = descendants().whereType<World>();
+    final currentTank = tanks.last;
     if (currentTank is Tank) {
       // small quest
       final playalbleQuest = questsSmallAqua

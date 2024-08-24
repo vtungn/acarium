@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:math' as math;
-import 'dart:ui';
 
 import 'package:carium/acarium_flame_game.dart';
-import 'package:carium/config/constants.dart';
 import 'package:flame/components.dart';
 import 'package:flame/rendering.dart';
 
@@ -26,18 +24,7 @@ class StaticObjFarLayer extends Component {}
 
 class FishLayerFar extends Component {}
 
-class StaticObjNearLayer extends PositionComponent {
-  @override
-  FutureOr<void> onLoad() {
-    size = Vector2(tvWidth, tvHeight);
-    add(RectangleComponent.fromRect(Rect.largest,
-        paint: Paint()..color = Color.fromARGB(106, 2, 40, 69)));
-    // final decorator = PaintDecorator.tint(Color.fromARGB(170, 8, 29, 116));
-    // decorator.addLast(decorator);
-
-    return super.onLoad();
-  }
-}
+class StaticObjNearLayer extends Component {}
 
 class FishLayerNear extends Component {}
 

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math' as math;
+import 'dart:ui';
 
 import 'package:carium/character/crab_component.dart';
 import 'package:carium/character/fish_component.dart';
@@ -17,7 +18,9 @@ class TankMed extends World {
     add(StaticObjFarLayer());
     add(fish1Layer);
     // TODO: add blue filter
-    add(StaticObjNearLayer());
+    add(StaticObjNearLayer()
+      ..add(RectangleComponent.fromRect(Rect.largest,
+          paint: Paint()..color = Color.fromARGB(106, 2, 40, 69))));
     // add
     addRock();
     add(FishLayerNear()..add(CrabComponent()));

@@ -5,6 +5,7 @@ sealed class Fish extends OceanObjModel {
   final double reproduceRate;
   final double spriteScale;
   final double oneFoodIncrease;
+  final double speedA;
   final double hunger;
   final List<FoodType> food;
 
@@ -12,6 +13,7 @@ sealed class Fish extends OceanObjModel {
       {this.hungerTime = 0.2,
       this.reproduceRate = 5,
       this.spriteScale = 1,
+      this.speedA = 1,
       this.oneFoodIncrease = 80,
       this.hunger = 100,
       super.foodType = FoodType.notfood,
@@ -54,11 +56,13 @@ class Maotien extends Fish {
 }
 
 class Maptrang extends Fish {
-  Maptrang({super.hunger = 100})
-      : super(
+  Maptrang({
+    super.hunger = 10,
+    super.speedA = 2,
+    super.oneFoodIncrease = 10,
+  }) : super(
           sprite: 'maptrang.png',
           foodType: FoodType.bigfish,
-          oneFoodIncrease: 10,
           food: [FoodType.smallfish],
         );
 }

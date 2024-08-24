@@ -42,7 +42,10 @@ class YouwinDialog extends StatelessWidget {
                       ),
                     ),
                     Image.asset(
-                        'assets/images/${questShow.reward.keys.first.sprite}'),
+                      'assets/images/${questShow.reward.keys.first.sprite}',
+                      width: 90,
+                      height: 90,
+                    ),
                   ],
                 ),
               const SizedBox(height: 12),
@@ -50,7 +53,7 @@ class YouwinDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: game.doneAndWaitNextQuest,
+                    onPressed: () => game.doneAndWaitNextQuest(isWin: true),
                     child: const Text('Done'),
                   ),
                 ],

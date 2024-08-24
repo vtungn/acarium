@@ -45,6 +45,14 @@ class _MainMenuState extends State<MainMenu> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        const Text(
+                          'Acarium',
+                          style: TextStyle(
+                            fontFamily: 'Shell',
+                            fontSize: 100,
+                            color: Color(0xff1098af),
+                          ),
+                        ),
                         _TextBtnMenu(
                           text: 'New game',
                           onPressed: () {
@@ -70,12 +78,12 @@ class _MainMenuState extends State<MainMenu> {
                                     maintainState: false));
                           },
                         ),
-                        _TextBtnMenu(
-                          text: 'Settings',
-                          onPressed: () {
-                            // show the overlay settings
-                          },
-                        ),
+                        // _TextBtnMenu(
+                        //   text: 'Settings',
+                        //   onPressed: () {
+                        //     // show the overlay settings
+                        //   },
+                        // ),
                       ],
                     ),
                   ),

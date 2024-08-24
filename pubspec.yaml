@@ -86,6 +86,9 @@ flutter:
     - family: Brixton
       fonts:
         - asset: assets/Brixton-Regular.otf
+    - family: Shell
+      fonts:
+        - asset: assets/Shell-Mera-Stamp.otf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

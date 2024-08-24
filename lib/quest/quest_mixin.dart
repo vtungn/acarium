@@ -20,6 +20,7 @@ mixin QuestMixin on FlameGame {
   TimerComponent? timer;
   QuestModel? currentQuest;
   int questCount = 0;
+  List<QuestModel> successedQuest = [];
   // List<QuestModel> questList = [];
   final nextQuestTimer = Timer(secBtwQuest);
 
@@ -54,6 +55,7 @@ mixin QuestMixin on FlameGame {
           removeOnFinish: true,
           onTick: () {
             rewardToGame();
+            successedQuest.add(currentQuest!);
             qState = QuestState.questSuccess;
           });
       add(timer!);
@@ -156,7 +158,7 @@ mixin QuestMixin on FlameGame {
     return true;
   }
 
-  void doneAndWaitNextQuest() {
+  void doneAndWaitNextQuest({bool isWin = false}) {
     overlays.remove('quest_success');
     overlays.remove('quest_fail_require');
     overlays.remove('quest');
@@ -175,13 +177,13 @@ mixin QuestMixin on FlameGame {
     if (questCount > 3) {
       newQuest = MedQuestNavigate();
     } else if (questCount < 3) {
-      newQuest =
-          questCount == 0 ? MedQuestNavigate() : questsSmallAqua.random();
+      // newQuest =
+      //     questCount == 0 ? MedQuestNavigate() : questsSmallAqua.random();
+      newQuest = SmallQuest2();
     } else {
       newQuest = questsMedAqua.random();
     }
     nextQuest = newQuest;
-    questCount++;
 
     nextQuestTimer.reset();
     nextQuestTimer.start();

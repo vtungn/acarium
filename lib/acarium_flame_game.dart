@@ -39,7 +39,11 @@ class Acarium extends FlameGame
   FutureOr<void> onLoad() async {
     await images.loadAllImages();
     tank = Tank();
-    renderCam();
+    cam = CameraComponent.withFixedResolution(
+        world: tank, width: tvWidth, height: tvHeight);
+    cam.viewfinder.anchor = Anchor.topLeft;
+
+    addAll([cam, tank]);
 
     return super.onLoad();
   }
@@ -50,17 +54,6 @@ class Acarium extends FlameGame
     tank = TankMed();
     cam.world = tank;
     add(tank);
-    // renderCam();
-  }
-
-  void renderCam() {
-    Future.delayed(const Duration(seconds: 1), () {
-      cam = CameraComponent.withFixedResolution(
-          world: tank, width: tvWidth, height: tvHeight);
-      cam.viewfinder.anchor = Anchor.topLeft;
-
-      addAll([cam, tank]);
-    });
   }
 
   @override

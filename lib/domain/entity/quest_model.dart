@@ -2,16 +2,16 @@ import 'package:carium/domain/entity/index.dart';
 import 'package:carium/domain/index.dart';
 import 'package:flame/components.dart';
 
-enum QuestLevel {
-  tutorial,
-  q1,
-  q2,
-  q3,
-  q4,
-  q5,
-  q6,
-  q7,
-}
+// enum QuestLevel {
+//   tutorial,
+//   q1,
+//   q2,
+//   q3,
+//   q4,
+//   q5,
+//   q6,
+//   q7,
+// }
 
 sealed class QuestModel {
   final String title;
@@ -36,7 +36,7 @@ class QuestTutorial extends QuestModel {
           title: 'Feeding Frenzy',
           description:
               'Seaweed is a source of food for your fish, and can regrow. Send you fish for an adventure to find the source of seaweed for your fish!',
-          questTimeSec: 10,
+          questTimeSec: 15,
           image: 'assets/images/quest/seaweed1.png',
           requiredObject: {Moi(): 4},
           reward: {Seaweed1(position: Vector2(1167, 683)): 1},
@@ -51,7 +51,7 @@ class SmallQuest1 extends QuestModel {
               "Collect this radiant coral to enhance your aquarium's beauty and boost the health of your marine life. But beware—territorial sea creatures guard this treasure. Secure the coral to create a vibrant, thriving habitat",
           questTimeSec: 10,
           image: 'assets/images/static/coral2.png',
-          requiredObject: {Moi(): 5},
+          requiredObject: {Moi(): 4},
           reward: {
             Coral1(position: Vector2(-93 / 2, 858 / 2)): 1,
             Coral2(position: Vector2(3369 / 2, 912 / 2)): 1,
@@ -66,11 +66,11 @@ class SmallQuest2 extends QuestModel {
           title: 'A new fish',
           description:
               "Whispers tell of a mysterious fish that only appears under specific conditions. Venture to the moonlit shores of the Whispering Lagoon, where the water shimmers with an ethereal glow. Solve the ancient puzzle hidden within the coral formations to lure the enigmatic fish into your nets. Capture this rare species to add an air of mystery and allure to your aquarium, drawing the awe of all who see it",
-          questTimeSec: 10,
+          questTimeSec: 1,
           image: 'assets/images/quest/qmark.png',
           requiredObject: {Moi(): 2},
           reward: {
-            Maptrang(hunger: 25): 1,
+            Maptrang(hunger: 25, speedA: 3): 1,
           },
         );
 }
@@ -83,7 +83,7 @@ class SmallQuest3 extends QuestModel {
               "Collect this radiant coral to enhance your aquarium's beauty and boost the health of your marine life. But beware—territorial sea creatures guard this treasure. Secure the coral to create a vibrant, thriving habitat",
           questTimeSec: 10,
           image: 'assets/images/maotien.png',
-          requiredObject: {Moi(): 10},
+          requiredObject: {Moi(): 3},
           reward: {
             Maotien(): 1,
             Duoigai(): 2,
@@ -101,10 +101,7 @@ class MedQuestNavigate extends QuestModel {
           questTimeSec: 20,
           image: 'assets/images/static/Corallayer3.png',
           requiredObject: {
-            // TODO: if this too hard we hard code the number of fish
             Moi(): 1,
-            // Duoigai(): 1,
-            // Buommonhon(): 1,
           },
           reward: {
             Coral1(position: Vector2(-93 / 2, 858 / 2)): 1,

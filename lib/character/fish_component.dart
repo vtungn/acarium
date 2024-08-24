@@ -3,7 +3,6 @@ import 'dart:math' as math;
 
 import 'package:carium/acarium_flame_game.dart';
 import 'package:carium/character/food_pellet.dart';
-import 'package:carium/character/ocean_obj_component.dart';
 import 'package:carium/config/constants.dart';
 import 'package:carium/domain/fish_move_mixin.dart';
 import 'package:flame/collisions.dart';
@@ -22,7 +21,7 @@ class FishComponent extends SpriteComponent
   var hungerDeltaTime = 0.1;
   @override
   var reProduceTimeRate = 0.1;
-  final eatDeltaTime = 2;
+  final eatDeltaTime = 0.2;
   Vector2 velocity = Vector2.zero();
   double direction = 0.0;
   Vector2 directionVector;
@@ -50,9 +49,11 @@ class FishComponent extends SpriteComponent
     oneFoodIncrease = fish.oneFoodIncrease;
     reProduceTimeRate = fish.reproduceRate;
     hungerDeltaTime = fish.hungerTime;
+    moveSpeed = fish.speedA * moveSpeed;
     anchor = Anchor.center;
-    add(RectangleHitbox());
+    add(RectangleHitbox(size: size, isSolid: true));
     add(FoodPellet(foodType: fish.foodType, foodSize: size));
+
     return super.onLoad();
   }
 
@@ -65,6 +66,10 @@ class FishComponent extends SpriteComponent
     while (accumulateTime >= fixedDeltaTime) {
       _onMove(dt);
       accumulateTime -= fixedDeltaTime;
+    }
+
+    if (children.whereType<FoodPellet>().isEmpty) {
+      removeFromParent();
     }
 
     super.update(dt);
@@ -218,10 +223,8 @@ class FishComponent extends SpriteComponent
     var foodsOnScreen =
         game.descendants().whereType<PositionComponent>().toList();
     foodsOnScreen = foodsOnScreen.where((element) {
-      if (element is FishComponent) {
-        return fish.food.contains(element.fish.foodType);
-      } else if (element is OceanObjComponent) {
-        return fish.food.contains(element.oceanObj.foodType);
+      if (element is FoodPellet) {
+        return fish.food.contains(element.foodType);
       } else {
         return false;
       }
@@ -233,7 +236,7 @@ class FishComponent extends SpriteComponent
       final bDistance = (b.position - position).length;
       return aDistance.compareTo(bDistance);
     });
-    swimToward(foodsOnScreen.first.center);
+    swimToward(foodsOnScreen.first.absolutePosition);
   }
 
   void swimToward(Vector2 target) {

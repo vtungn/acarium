@@ -60,8 +60,8 @@ class QuestTemplate extends StatelessWidget {
                       Text(questShow.requiredObject[e].toString()),
                       Image.asset(
                         'assets/images/${e.sprite}',
-                        width: 20,
-                        height: 20,
+                        width: 50,
+                        height: 50,
                       ),
                     ],
                   )),

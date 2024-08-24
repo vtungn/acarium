@@ -12,6 +12,7 @@ class FoodPellet extends PositionComponent with CollisionCallbacks {
   @override
   FutureOr<void> onLoad() {
     add(RectangleHitbox(size: foodSize));
+
     return super.onLoad();
   }
 

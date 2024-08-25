@@ -23,6 +23,15 @@ class Seaweed1 extends OceanStaticModel {
         );
 }
 
+class Seaweed2 extends OceanStaticModel {
+  Seaweed2({required super.position})
+      : super(
+          sprite: 'static/seaweed2.png',
+          regenRate: 0.3,
+          foodType: FoodType.seaweed,
+        );
+}
+
 class Plankton extends OceanStaticModel {
   Plankton({required super.position})
       : super(

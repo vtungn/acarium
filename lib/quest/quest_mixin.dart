@@ -46,19 +46,24 @@ mixin QuestMixin on FlameGame {
   void startQuest() {
     overlays.remove('quest');
     currentQuest = nextQuest;
-    if (questCost()) {
-      qState = QuestState.questStarted;
-      sendTroopToFinishQuest();
-      timerDisplay = currentQuest!.questTimeSec;
-      timer = TimerComponent(
-          period: nextQuest.questTimeSec.toDouble(),
-          removeOnFinish: true,
-          onTick: () {
-            rewardToGame();
-            successedQuest.add(currentQuest!);
-            qState = QuestState.questSuccess;
-          });
-      add(timer!);
+    if (currentQuest is YouWinGameQuest) {
+      overlays.add('you_win');
+      qState = QuestState.win;
+    } else {
+      if (questCost()) {
+        qState = QuestState.questStarted;
+        sendTroopToFinishQuest();
+        timerDisplay = currentQuest!.questTimeSec;
+        timer = TimerComponent(
+            period: nextQuest.questTimeSec.toDouble(),
+            removeOnFinish: true,
+            onTick: () {
+              successedQuest.add(currentQuest!);
+              rewardToGame();
+              qState = QuestState.questSuccess;
+            });
+        add(timer!);
+      }
     }
   }
 
@@ -188,18 +193,35 @@ mixin QuestMixin on FlameGame {
         newQuest = MedQuestNavigate();
       } else {
         // small quest
-        final playalbleQuest = questsSmallAqua.where(
-            (quest) => quest.canReplay || !successedQuest.contains(quest));
+        final playalbleQuest = questsSmallAqua.where((quest) =>
+            quest.canReplay ||
+            !successedQuest.any((succQuest) => quest.title == succQuest.title));
         newQuest = questCount == 0
             ? QuestTutorial()
             : playalbleQuest.toList().random();
       }
     } else {
       // ocean quest
-      newQuest = questsMedAqua
-          .where((quest) => quest.canReplay || !successedQuest.contains(quest))
-          .toList()
-          .random();
+      if (successedQuest.any((quest) => quest.title == MedQuest4().title)) {
+        if (successedQuest.any((quest) => quest.title == MedQuest5().title)) {
+          if ((successedQuest
+              .any((quest) => quest.title == MedQuest6().title))) {
+            newQuest = questsMedAqua
+                .where((quest) =>
+                    quest.canReplay ||
+                    !successedQuest
+                        .any((succQuest) => quest.title == succQuest.title))
+                .toList()
+                .random();
+          } else {
+            newQuest = MedQuest6();
+          }
+        } else {
+          newQuest = MedQuest5();
+        }
+      } else {
+        newQuest = MedQuest4();
+      }
     }
     nextQuest = newQuest;
     questCount++;
@@ -217,10 +239,11 @@ List<QuestModel> questsSmallAqua = [
   SmallQuest3(),
 ];
 List<QuestModel> questsMedAqua = [
-  MedQuest3(),
+  // MedQuest3(),
   MedQuest4(),
   MedQuest5(),
   MedQuest6(),
+  YouWinGameQuest(),
 ];
 
 enum QuestState {
@@ -231,4 +254,5 @@ enum QuestState {
   questFailed,
   questSkip,
   gameover,
+  win,
 }

@@ -2,15 +2,17 @@ import 'dart:async';
 import 'dart:math' as math;
 import 'dart:ui';
 
+import 'package:carium/acarium_flame_game.dart';
 import 'package:carium/character/crab_component.dart';
 import 'package:carium/character/fish_component.dart';
 import 'package:carium/character/ocean_obj_component.dart';
 import 'package:carium/config/constants.dart';
 import 'package:carium/domain/index.dart';
 import 'package:carium/level/tank_layer.dart';
+import 'package:carium/quest/quest_mixin.dart';
 import 'package:flame/components.dart';
 
-class TankMed extends World {
+class TankMed extends World with HasGameRef<Acarium> {
   final fish1Layer = FishLayerFar();
   final backFarLayer = StaticObjFarLayer();
   @override
@@ -20,7 +22,7 @@ class TankMed extends World {
     add(fish1Layer);
     add(StaticObjNearLayer()
       ..add(RectangleComponent.fromRect(Rect.largest,
-          paint: Paint()..color = Color.fromARGB(106, 2, 40, 69))));
+          paint: Paint()..color = const Color.fromARGB(106, 2, 40, 69))));
     // add
     addRock();
     add(FishLayerNear()..add(CrabComponent()));
@@ -41,17 +43,8 @@ class TankMed extends World {
   }
 
   addFish() {
-    add(FishComponent(
-        fish: Maotien(spriteScale: 0.5),
-        position: Vector2.all(10),
-        directionVector: Vector2.all(10)));
-    add(FishComponent(
-        fish: Maotien(spriteScale: 0.5),
-        position: Vector2.all(10),
-        directionVector: Vector2.all(10)));
-
     var rnd = math.Random();
-    for (var i = 0; i < 12; i++) {
+    for (var i = 0; i < 15; i++) {
       final fish = FishComponent(
         fish: Thu(speedA: 0.5),
         position:
@@ -61,6 +54,22 @@ class TankMed extends World {
         // direction: 0,
       );
       fish1Layer.add(fish);
+    }
+  }
+
+  @override
+  void update(double dt) {
+    Future.delayed(const Duration(seconds: 1), () {
+      checkEndGame();
+    });
+    super.update(dt);
+  }
+
+  checkEndGame() {
+    final checkEndGame = descendants().whereType<FishComponent>();
+    if (checkEndGame.isEmpty || game.qState != QuestState.win) {
+      game.overlays.add('game_over');
+      game.qState = QuestState.gameover;
     }
   }
 }

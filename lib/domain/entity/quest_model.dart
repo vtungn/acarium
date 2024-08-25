@@ -39,10 +39,10 @@ class QuestTutorial extends QuestModel {
           description:
               'Seaweed is a source of food for your fish, and can regrow. Send you fish for an adventure to find the source of seaweed for your fish!',
           questTimeSec: 15,
-          image: 'assets/images/quest/seaweed1.png',
+          image: 'assets/images/static/seaweed2.png',
           canReplay: true,
           requiredObject: {Moi(): 4},
-          reward: {Seaweed1(position: Vector2(1167, 683)): 1},
+          reward: {Seaweed2(position: Vector2(1167, 683)): 1},
         );
 }
 
@@ -92,7 +92,7 @@ class SmallQuest3 extends QuestModel {
           requiredObject: {Moi(): 3},
           reward: {
             Maotien(): 1,
-            Duoigai(): 2,
+            Duoigai(): 1,
             Buommonhon(): 1,
             Moi(): 3,
           },
@@ -125,9 +125,9 @@ class MedQuest3 extends QuestModel {
           questTimeSec: 10,
           image: 'assets/images/thu.png',
           canReplay: true,
-          requiredObject: {Nguvayxanh(): 1},
+          requiredObject: {Thu(): 9},
           reward: {
-            Thu(): 10,
+            Thu(): 2,
             Buommonhon(spriteScale: 0.5): 5,
           },
         );
@@ -158,7 +158,7 @@ class MedQuest5 extends QuestModel {
               "Rumors speak of a legendary pearl hidden deep within the coral caves of the Abyssal Trench. Ancient guardians protect it, and only the bravest can retrieve it. Navigate the treacherous waters, avoid the lurking predators, and bring back the Lost Pearl to prove your worth to the Ocean King",
           questTimeSec: 10,
           image: 'assets/images/static/Shell8.png',
-          requiredObject: {Maotien(): 1},
+          requiredObject: {Nguvayxanh(): 1},
           canReplay: false,
           reward: {
             Shell1(position: Vector2(959, 677)): 1,
@@ -173,7 +173,21 @@ class MedQuest6 extends QuestModel {
           description: "Follow the Bluefin Tuna, the shark is back",
           questTimeSec: 5,
           image: 'assets/images/maptrang.png',
-          requiredObject: {Nguvayxanh(): 1},
+          requiredObject: {Shell1(position: Vector2(959, 677)): 1},
+          reward: {
+            Maptrang(hunger: 25, speedA: 3): 1,
+          },
+        );
+}
+
+class YouWinGameQuest extends QuestModel {
+  YouWinGameQuest()
+      : super(
+          title: 'To be continued',
+          description: "Acarium will continue to update",
+          questTimeSec: 2,
+          image: 'assets/images/quest/qmark.png',
+          requiredObject: {Thu(): 1},
           reward: {
             Maptrang(hunger: 25, speedA: 3): 1,
           },

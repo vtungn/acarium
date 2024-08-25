@@ -43,7 +43,8 @@ class Duoigai extends Fish {
   Duoigai()
       : super(
           sprite: 'duoigai.png',
-          food: [FoodType.seaweed],
+          foodType: FoodType.bigfish,
+          food: [FoodType.smallfish],
         );
 }
 
@@ -51,7 +52,7 @@ class Maotien extends Fish {
   Maotien({super.spriteScale})
       : super(
           sprite: 'maotien.png',
-          food: [FoodType.seaweed],
+          food: [FoodType.smallfish],
         );
 }
 
@@ -90,8 +91,9 @@ class Nguvayvang extends Fish {
       : super(
           sprite: 'nguvayvang.png',
           reproduceRate: 10,
+          hungerTime: 0.6,
           foodType: FoodType.bigfish,
-          food: [FoodType.seaweed],
+          food: [FoodType.smallfish],
         );
 }
 
@@ -100,6 +102,7 @@ class Nguvayxanh extends Fish {
       : super(
           sprite: 'nguvayxanh.png',
           reproduceRate: 10,
+          hungerTime: 0.6,
           foodType: FoodType.bigfish,
           food: [FoodType.smallfish],
         );

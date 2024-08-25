@@ -79,6 +79,7 @@ class _MainMenuState extends State<MainMenu> {
                                               YouwinDialog(game),
                                           'game_over': (_, game) =>
                                               GameOver(game),
+                                          'you_win': (_, game) => Youwin(game),
                                           'quest_fail_require': (_, game) =>
                                               WarningDialog(game),
                                         },

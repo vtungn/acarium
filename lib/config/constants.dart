@@ -8,3 +8,4 @@ const tankBoundaryMargin = -100;
 const initFirstQuest = 5.0;
 const secBtwQuest = 10.0;
 const crabSpeed = 100;
+const fishSpeed = 100;

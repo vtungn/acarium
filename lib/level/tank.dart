@@ -33,7 +33,7 @@ class Tank extends World with HasGameRef<Acarium> {
 
   void fishLayerFar() {
     var rnd = math.Random();
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 8; i++) {
       final fish = FishComponent(
         fish: Moi(),
         position:

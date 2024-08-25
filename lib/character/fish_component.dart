@@ -49,7 +49,7 @@ class FishComponent extends SpriteComponent
     oneFoodIncrease = fish.oneFoodIncrease;
     reProduceTimeRate = fish.reproduceRate;
     hungerDeltaTime = fish.hungerTime;
-    moveSpeed = fish.speedA * moveSpeed;
+    moveSpeed = fish.speedA * fishSpeed;
     anchor = Anchor.center;
     add(RectangleHitbox(size: size, isSolid: true));
     add(FoodPellet(foodType: fish.foodType, foodSize: size));

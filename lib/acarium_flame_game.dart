@@ -5,18 +5,14 @@ import 'package:carium/character/food_pellet.dart';
 import 'package:carium/config/constants.dart';
 import 'package:carium/quest/quest_mixin.dart';
 import 'package:flame/components.dart';
-import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame/input.dart';
-import 'package:flame/particles.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
 import 'domain/index.dart';
 import 'level/index.dart';
 
-class Acarium extends FlameGame
-    with HasCollisionDetection, MouseMovementDetector, QuestMixin {
+class Acarium extends FlameGame with HasCollisionDetection, QuestMixin {
   late final CameraComponent cam;
   late World tank;
   final FoodPellet plankton =
@@ -61,34 +57,5 @@ class Acarium extends FlameGame
     tank = TankMed();
     cam.world = tank;
     add(tank);
-  }
-
-  @override
-  void onMouseMove(PointerHoverInfo info) {
-    add(
-      ParticleSystemComponent(
-        position: info.eventPosition.widget,
-        particle: Particle.generate(
-          count: 10,
-          generator: (i) {
-            return AcceleratedParticle(
-              lifespan: 2,
-              speed: Vector2(
-                    noise.transform(random.nextDouble()),
-                    noise.transform(random.nextDouble()),
-                  ) *
-                  i.toDouble(),
-              child: CircleParticle(
-                radius: 2,
-                paint: Paint()
-                  ..color = colorTween.transform(random.nextDouble())!,
-              ),
-            );
-          },
-        ),
-      ),
-    );
-
-    super.onMouseMove(info);
   }
 }

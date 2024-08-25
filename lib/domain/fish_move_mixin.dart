@@ -24,7 +24,7 @@ mixin FishMoveMixin on SpriteComponent {
   }
 
   produceGain(double dt) {
-    if (boidsCount > 20) return;
+    if (boidsCount > 15) return;
     accReproduceTime += dt;
     while (accReproduceTime >= reProduceTimeRate) {
       accReproduceTime -= reProduceTimeRate;

@@ -120,7 +120,7 @@ class FishComponent extends SpriteComponent
     }
     separation.normalize();
     separation *= moveSpeed;
-    separation -= velocity;
+    separation += velocity;
     separation.scaleTo(separationForce);
     final newDirection = directionVector + separation;
     directionVector = newDirection.normalized();
@@ -145,7 +145,7 @@ class FishComponent extends SpriteComponent
     }
     sum.normalize();
     sum.scaleTo(cohesionForce);
-    final newDirection = directionVector + sum;
+    final newDirection = directionVector - sum;
     directionVector = newDirection.normalized();
     // return sum;
   }
@@ -203,7 +203,7 @@ class FishComponent extends SpriteComponent
 
   _onMove(double dt) {
     velocity.x = ((moveSpeed) * directionVector.x);
-    velocity.y = ((moveSpeed) * directionVector.y);
+    velocity.y = ((moveSpeed) * directionVector.y * 1.01);
     transform.angle = math.atan2(velocity.y, velocity.x);
     _tankBoundary();
     separation(minDistance: neighborDist);

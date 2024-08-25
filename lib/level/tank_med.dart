@@ -17,7 +17,6 @@ class TankMed extends World {
     add(BackgroundLayer(backgroundImage: 'static/farsea.jpg'));
     add(StaticObjFarLayer());
     add(fish1Layer);
-    // TODO: add blue filter
     add(StaticObjNearLayer()
       ..add(RectangleComponent.fromRect(Rect.largest,
           paint: Paint()..color = Color.fromARGB(106, 2, 40, 69))));
@@ -42,18 +41,18 @@ class TankMed extends World {
 
   addFish() {
     add(FishComponent(
-        fish: Maotien(),
+        fish: Maotien(spriteScale: 0.5),
         position: Vector2.all(10),
         directionVector: Vector2.all(10)));
     add(FishComponent(
-        fish: Maotien(),
+        fish: Maotien(spriteScale: 0.5),
         position: Vector2.all(10),
         directionVector: Vector2.all(10)));
 
     var rnd = math.Random();
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 20; i++) {
       final fish = FishComponent(
-        fish: Thu(speedA: 0.5, spriteScale: 0.4),
+        fish: Thu(speedA: 0.5),
         position:
             Vector2(rnd.nextDouble() * tvWidth, rnd.nextDouble() * tvHeight),
         directionVector:

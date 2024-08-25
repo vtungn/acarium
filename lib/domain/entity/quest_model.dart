@@ -144,8 +144,8 @@ class MedQuest4 extends QuestModel {
           image: 'assets/images/nguvayxanh.png',
           requiredObject: {Thu(): 5},
           reward: {
-            Nguvayvang(): 2,
-            Nguvayxanh(): 3,
+            Nguvayvang(): 1,
+            Nguvayxanh(): 2,
           },
         );
 }

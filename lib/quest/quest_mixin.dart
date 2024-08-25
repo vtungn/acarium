@@ -31,7 +31,7 @@ mixin QuestMixin on FlameGame {
       qState = QuestState.newQuestAvailable;
       final crab = descendants().whereType<CrabComponent>().first;
       crab.add(BubbleBtnComponent(
-        position: Vector2(-230, -230),
+        position: Vector2(-120, -120),
       ));
     };
     return super.onLoad();
@@ -184,11 +184,16 @@ mixin QuestMixin on FlameGame {
     final tanks = descendants().whereType<World>();
     final currentTank = tanks.last;
     if (currentTank is Tank) {
-      // small quest
-      final playalbleQuest = questsSmallAqua
-          .where((quest) => quest.canReplay || !successedQuest.contains(quest));
-      newQuest =
-          questCount == 0 ? QuestTutorial() : playalbleQuest.toList().random();
+      if (successedQuest.length > 2) {
+        newQuest = MedQuestNavigate();
+      } else {
+        // small quest
+        final playalbleQuest = questsSmallAqua.where(
+            (quest) => quest.canReplay || !successedQuest.contains(quest));
+        newQuest = questCount == 0
+            ? QuestTutorial()
+            : playalbleQuest.toList().random();
+      }
     } else {
       // ocean quest
       newQuest = questsMedAqua

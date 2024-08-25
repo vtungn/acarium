@@ -33,7 +33,7 @@ class Tank extends World with HasGameRef<Acarium> {
 
   void fishLayerFar() {
     var rnd = math.Random();
-    for (var i = 0; i < 6; i++) {
+    for (var i = 0; i < 10; i++) {
       final fish = FishComponent(
         fish: Moi(),
         position:
@@ -47,7 +47,7 @@ class Tank extends World with HasGameRef<Acarium> {
   }
 
   void addRock() {
-    add(OceanObjComponent(oceanObj: Seaweed1(position: Vector2.all(10))));
+    add(OceanObjComponent(oceanObj: Seaweed1(position: Vector2(167, 625))));
     // add(OceanObjComponent(
     //     oceanObj: Coral2(position: Vector2(3369 / 2, 912 / 2))));
     back1Layer.add(

@@ -14,6 +14,7 @@ class BubbleBtnComponent extends SpriteComponent
   @override
   FutureOr<void> onLoad() {
     sprite = Sprite(game.images.fromCache('speech.png'));
+    scale = Vector2.all(0.5);
     timerText = TextComponent(
         textRenderer: TextPaint(
           style: const TextStyle(

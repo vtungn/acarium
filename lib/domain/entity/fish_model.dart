@@ -90,6 +90,7 @@ class Nguvayvang extends Fish {
       : super(
           sprite: 'nguvayvang.png',
           reproduceRate: 10,
+          foodType: FoodType.bigfish,
           food: [FoodType.seaweed],
         );
 }
@@ -99,6 +100,7 @@ class Nguvayxanh extends Fish {
       : super(
           sprite: 'nguvayxanh.png',
           reproduceRate: 10,
+          foodType: FoodType.bigfish,
           food: [FoodType.smallfish],
         );
 }

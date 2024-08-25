@@ -12,10 +12,11 @@ import 'package:flame/components.dart';
 
 class TankMed extends World {
   final fish1Layer = FishLayerFar();
+  final backFarLayer = StaticObjFarLayer();
   @override
   FutureOr<void> onLoad() {
     add(BackgroundLayer(backgroundImage: 'static/farsea.jpg'));
-    add(StaticObjFarLayer());
+    add(backFarLayer);
     add(fish1Layer);
     add(StaticObjNearLayer()
       ..add(RectangleComponent.fromRect(Rect.largest,
@@ -31,11 +32,11 @@ class TankMed extends World {
   addRock() {
     add(OceanObjComponent(
         oceanObj: CoralLayer1(position: Vector2(0 / 2, 1212 / 2))));
-    add(OceanObjComponent(
+    backFarLayer.add(OceanObjComponent(
         oceanObj: CoralLayer2(position: Vector2(1269 / 2, 1497 / 2))));
-    add(OceanObjComponent(
+    backFarLayer.add(OceanObjComponent(
         oceanObj: CoralLayer3(position: Vector2(1882 / 2, 1006 / 2))));
-    add(OceanObjComponent(
+    backFarLayer.add(OceanObjComponent(
         oceanObj: CoralLayer4(position: Vector2(2346 / 2, 935 / 2))));
   }
 
@@ -50,7 +51,7 @@ class TankMed extends World {
         directionVector: Vector2.all(10)));
 
     var rnd = math.Random();
-    for (var i = 0; i < 20; i++) {
+    for (var i = 0; i < 12; i++) {
       final fish = FishComponent(
         fish: Thu(speedA: 0.5),
         position:

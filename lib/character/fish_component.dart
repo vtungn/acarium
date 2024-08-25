@@ -202,6 +202,11 @@ class FishComponent extends SpriteComponent
   }
 
   _onMove(double dt) {
+    if (state == FishState.hungry) {
+      moveSpeed = fish.speedA * fishSpeed * 2;
+    } else {
+      moveSpeed = fish.speedA * fishSpeed;
+    }
     velocity.x = ((moveSpeed) * directionVector.x);
     velocity.y = ((moveSpeed) * directionVector.y * 1.01);
     transform.angle = math.atan2(velocity.y, velocity.x);

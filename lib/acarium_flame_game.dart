@@ -35,7 +35,7 @@ class Acarium extends FlameGame with HasCollisionDetection, QuestMixin {
   @override
   FutureOr<void> onLoad() async {
     await images.loadAllImages();
-    tank = Tank();
+    tank = TankMed();
     cam = CameraComponent.withFixedResolution(
         world: tank, width: tvWidth, height: tvHeight);
     cam.viewfinder.anchor = Anchor.topLeft;

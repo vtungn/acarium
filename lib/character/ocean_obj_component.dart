@@ -43,7 +43,8 @@ class OceanObjComponent extends SpriteComponent
   }
 
   generateFood() {
-    final food = FoodPellet(foodType: oceanObj.foodType, foodSize: size);
+    final food = FoodPellet(
+        foodType: oceanObj.foodType, foodSize: size, position: size / 2);
     add(food);
   }
 

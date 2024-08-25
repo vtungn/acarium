@@ -46,7 +46,10 @@ mixin FishMoveMixin on SpriteComponent {
       if (hungerStat < 50 && !isRemoved) {
         state = FishState.hungry;
         seekFood();
-        tint(const Color.fromARGB(113, 248, 0, 0));
+        tint(const Color.fromARGB(112, 251, 214, 0));
+        if (hungerStat < 0) {
+          tint(const Color.fromARGB(113, 248, 0, 0));
+        }
       }
       if (hungerStat < -20) {
         death();

@@ -115,6 +115,7 @@ class Thu extends Fish {
   Thu({super.speedA = 1, super.spriteScale = 1})
       : super(
           sprite: 'thu.png',
+          reproduceRate: 0.5,
           foodType: FoodType.smallfish,
           food: [FoodType.seaweed],
         );

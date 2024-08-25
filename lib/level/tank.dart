@@ -21,12 +21,12 @@ class Tank extends World with HasGameRef<Acarium> {
   FutureOr<void> onLoad() async {
     FlameAudio.bgm.play('voidocean.mp3', volume: .5);
     add(BackgroundLayer(backgroundImage: 'static/closesea.jpg'));
-    addRock();
     add(back1Layer);
     add(fish1Layer);
     add(back2Layer);
     add(FishLayerNear()..add(CrabComponent()));
     add(CloseupLayer());
+    addRock();
     fishLayerFar();
     return super.onLoad();
   }

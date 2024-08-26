@@ -40,7 +40,7 @@ class Buommonhon extends Fish {
 }
 
 class Duoigai extends Fish {
-  Duoigai()
+  Duoigai({super.speedA = 1, super.hunger = 100, super.oneFoodIncrease = 80})
       : super(
           sprite: 'duoigai.png',
           foodType: FoodType.bigfish,
@@ -69,7 +69,7 @@ class Maptrang extends Fish {
 }
 
 class Moi extends Fish {
-  Moi()
+  Moi({super.hunger = 100})
       : super(
           sprite: 'moi.png',
           reproduceRate: 1,
@@ -109,7 +109,7 @@ class Nguvayxanh extends Fish {
 }
 
 class Thantien extends Fish {
-  Thantien()
+  Thantien({super.speedA = 1, super.hunger = 100})
       : super(
           sprite: 'thantien.png',
           food: [FoodType.smallfish],

@@ -67,7 +67,7 @@ class TankMed extends World with HasGameRef<Acarium> {
 
   checkEndGame() {
     final checkEndGame = descendants().whereType<FishComponent>();
-    if (checkEndGame.isEmpty || game.qState != QuestState.win) {
+    if (checkEndGame.isEmpty && game.qState != QuestState.win) {
       game.overlays.add('game_over');
       game.qState = QuestState.gameover;
     }

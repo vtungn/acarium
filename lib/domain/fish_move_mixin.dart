@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:carium/character/fish_component.dart';
+import 'package:carium/domain/entity/fish_model.dart';
 import 'package:flame/components.dart';
 
 enum FishState { idle, hungry, reproduce }
@@ -23,7 +24,7 @@ mixin FishMoveMixin on SpriteComponent {
     super.update(dt);
   }
 
-  produceGain(double dt) {
+  void produceGain(double dt) {
     if (boidsCount > 15) return;
     accReproduceTime += dt;
     while (accReproduceTime >= reProduceTimeRate) {
@@ -38,7 +39,7 @@ mixin FishMoveMixin on SpriteComponent {
     }
   }
 
-  hungerDrain(double dt) {
+  void hungerDrain(double dt) {
     accHungerTime += dt;
     while (accHungerTime >= hungerDeltaTime) {
       hungerStat--;
@@ -57,11 +58,11 @@ mixin FishMoveMixin on SpriteComponent {
     }
   }
 
-  death() {
+  void death() {
     removeFromParent();
   }
 
-  eatFood() {
+  void eatFood() {
     hungerStat += oneFoodIncrease;
     if (hungerStat >= 80) {
       state = FishState.idle;
@@ -69,7 +70,7 @@ mixin FishMoveMixin on SpriteComponent {
     }
   }
 
-  reproduceNewFish(fish) {
+  void reproduceNewFish(Fish fish) {
     reproduceStat = 0;
     tint(const Color(0x00000000));
     state = FishState.idle;
@@ -79,6 +80,6 @@ mixin FishMoveMixin on SpriteComponent {
         directionVector: Vector2.random()));
   }
 
-  seekFood();
-  seekPartner();
+  void seekFood();
+  void seekPartner();
 }

@@ -41,7 +41,7 @@ class Shark extends SpriteComponent
     super.update(dt);
   }
 
-  _onMove(double dt) {
+  void _onMove(double dt) {
     velocity.x = ((moveSpeed) * directionVector.x);
     velocity.y = ((moveSpeed) * directionVector.y);
     transform.angle = math.atan2(velocity.y, velocity.x);
@@ -55,7 +55,7 @@ class Shark extends SpriteComponent
     }
   }
 
-  _tankBoundary() {
+  void _tankBoundary() {
     if (position.x < tankBoundaryMargin) {
       // velocity.x += turnFactor;
       final newDirection = directionVector + Vector2(1, 0);

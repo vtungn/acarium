@@ -36,8 +36,7 @@ class FishComponent extends SpriteComponent
   late double oneFoodIncrease = 80;
 
   FishComponent(
-      {required this.fish, required position, required this.directionVector})
-      : super(position: position);
+      {required this.fish, required position, required this.directionVector});
 
   @override
   FutureOr<void> onLoad() async {
@@ -181,7 +180,7 @@ class FishComponent extends SpriteComponent
     // return sum;
   }
 
-  _tankBoundary() {
+  void _tankBoundary() {
     if (position.x < tankBoundaryMargin) {
       // velocity.x += turnFactor;
       final newDirection = directionVector + Vector2(1, 0);
@@ -201,7 +200,7 @@ class FishComponent extends SpriteComponent
     }
   }
 
-  _onMove(double dt) {
+  void _onMove(double dt) {
     if (state == FishState.hungry) {
       moveSpeed = fish.speedA * fishSpeed * 2;
     } else {

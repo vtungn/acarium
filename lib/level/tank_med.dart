@@ -31,7 +31,7 @@ class TankMed extends World with HasGameReference<Acarium> {
     return super.onLoad();
   }
 
-  addRock() {
+  void addRock() {
     add(OceanObjComponent(
         oceanObj: CoralLayer1(position: Vector2(0 / 2, 1212 / 2))));
     backFarLayer.add(OceanObjComponent(
@@ -42,7 +42,7 @@ class TankMed extends World with HasGameReference<Acarium> {
         oceanObj: CoralLayer4(position: Vector2(2346 / 2, 935 / 2))));
   }
 
-  addFish() {
+  void addFish() {
     var rnd = math.Random();
     for (var i = 0; i < 15; i++) {
       final fish = FishComponent(
@@ -69,7 +69,7 @@ class TankMed extends World with HasGameReference<Acarium> {
     super.update(dt);
   }
 
-  checkEndGame() {
+  void checkEndGame() {
     final checkEndGame = descendants().whereType<FishComponent>();
     if (checkEndGame.isEmpty && game.qState != QuestState.win) {
       game.overlays.add('game_over');

@@ -16,7 +16,7 @@ class FoodPellet extends PositionComponent with CollisionCallbacks {
     return super.onLoad();
   }
 
-  gotEaten() {
+  void gotEaten() {
     removeFromParent();
   }
 }

@@ -42,7 +42,7 @@ class CrabComponent extends SpriteAnimationGroupComponent
     super.onTapDown(event);
   }
 
-  _tankBoundary() {
+  void _tankBoundary() {
     if (x < 0) {
       // velocity.x += turnFactor;
       final newDirection = directionVector + Vector2(1, 0);

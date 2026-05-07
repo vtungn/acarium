@@ -67,7 +67,7 @@ mixin QuestMixin on FlameGame {
     }
   }
 
-  rewardToGame() {
+  void rewardToGame() {
     overlays.add('quest_success');
     if (currentQuest is MedQuestNavigate) {
       renderMedTank();
@@ -229,7 +229,7 @@ mixin QuestMixin on FlameGame {
     nextQuestTimer.start();
   }
 
-  renderMedTank();
+  void renderMedTank();
 }
 
 List<QuestModel> questsSmallAqua = [

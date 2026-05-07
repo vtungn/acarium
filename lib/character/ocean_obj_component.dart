@@ -8,7 +8,7 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 
 class OceanObjComponent extends SpriteComponent
-    with HasGameRef<Acarium>, DragCallbacks {
+    with HasGameReference<Acarium>, DragCallbacks {
   final OceanStaticModel oceanObj;
   double accGenerateTime = 0;
   double generateRate = 0.5;

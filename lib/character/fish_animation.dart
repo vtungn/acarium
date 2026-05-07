@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:carium/acarium_flame_game.dart';
+import 'package:flutter/foundation.dart';
 import 'package:carium/character/food_pellet.dart';
 import 'package:carium/character/ocean_obj_component.dart';
 import 'package:carium/config/constants.dart';
@@ -13,7 +13,7 @@ import '../domain/index.dart';
 enum FishType { fish1, fish2 }
 
 class FishAnimationComponent extends SpriteAnimationComponent
-    with HasGameRef<Acarium>, CollisionCallbacks {
+    with HasGameReference<Acarium>, CollisionCallbacks {
   final Fish fish;
   double accumulateTime = 0;
   double accEatTime = 0;
@@ -35,10 +35,9 @@ class FishAnimationComponent extends SpriteAnimationComponent
 
   FishAnimationComponent(
       {required this.fish,
-      required position,
+      required super.position,
       required this.directionVector,
-      required this.scaleFactor})
-      : super(position: position);
+      required this.scaleFactor});
 
   @override
   FutureOr<void> onLoad() async {
@@ -165,42 +164,6 @@ class FishAnimationComponent extends SpriteAnimationComponent
     // return sum;
   }
 
-  _tankBoundary() {
-    if (position.x < tankBoundaryMargin) {
-      // velocity.x += turnFactor;
-      final newDirection = directionVector + Vector2(1, 0);
-      directionVector = newDirection.normalized();
-    }
-    if (position.x > tvWidth - tankBoundaryMargin) {
-      final newDirection = directionVector + Vector2(-1, 0);
-      directionVector = newDirection.normalized();
-    }
-    if (position.y < tankBoundaryMargin) {
-      final newDirection = directionVector + Vector2(0, 1);
-      directionVector = newDirection.normalized();
-    }
-    if (position.y > tvHeight - tankBoundaryMargin) {
-      final newDirection = directionVector + Vector2(0, -1);
-      directionVector = newDirection.normalized();
-    }
-  }
-
-  _onMove(double dt) {
-    velocity.x = ((moveSpeed) * directionVector.x);
-    velocity.y = ((moveSpeed) * directionVector.y);
-    transform.angle = math.atan2(velocity.y, velocity.x);
-    _tankBoundary();
-    separation(minDistance: neighborDist);
-    alignment();
-    cohesion();
-    position.x += velocity.x * dt;
-    position.y += velocity.y * dt;
-    if (velocity.x < 0 && !isFlippedVertically) {
-      flipVertically();
-    } else if (velocity.x > 0 && isFlippedVertically) {
-      flipVertically();
-    }
-  }
 
   void seekFood() {
     final weeds2 = game.descendants().whereType<OceanObjComponent>().toList();
@@ -226,7 +189,7 @@ class FishAnimationComponent extends SpriteAnimationComponent
     }
   }
 
-  hungerDrain(double dt) {
+  void hungerDrain(double dt) {
     accHungerTime += dt;
     while (accHungerTime >= hungerDeltaTime) {
       hunger--;
@@ -237,12 +200,12 @@ class FishAnimationComponent extends SpriteAnimationComponent
     }
   }
 
-  eatFood() {
+  void eatFood() {
     hunger += 5;
   }
 
-  death() {
-    print('isDeath');
+  void death() {
+    if (kDebugMode) debugPrint('isDeath');
     removeFromParent();
   }
 }

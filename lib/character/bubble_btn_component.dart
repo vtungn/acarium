@@ -8,7 +8,7 @@ import 'package:flame/text.dart';
 import 'package:flutter/material.dart';
 
 class BubbleBtnComponent extends SpriteComponent
-    with HasGameRef<Acarium>, TapCallbacks {
+    with HasGameReference<Acarium>, TapCallbacks {
   BubbleBtnComponent({required super.position});
   late TextComponent timerText;
   @override

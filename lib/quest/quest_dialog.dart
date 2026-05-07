@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 
 class QuestTemplate extends StatelessWidget {
   final Acarium game;
-  const QuestTemplate(
-    this.game, {
-    Key? key,
-  }) : super(key: key);
+  const QuestTemplate(this.game, {super.key});
 
   @override
   Widget build(BuildContext context) {

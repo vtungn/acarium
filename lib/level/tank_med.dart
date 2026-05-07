@@ -12,7 +12,7 @@ import 'package:carium/level/tank_layer.dart';
 import 'package:carium/quest/quest_mixin.dart';
 import 'package:flame/components.dart';
 
-class TankMed extends World with HasGameRef<Acarium> {
+class TankMed extends World with HasGameReference<Acarium> {
   final fish1Layer = FishLayerFar();
   final backFarLayer = StaticObjFarLayer();
   @override
@@ -57,11 +57,15 @@ class TankMed extends World with HasGameRef<Acarium> {
     }
   }
 
+  double _checkTimer = 0;
+
   @override
   void update(double dt) {
-    Future.delayed(const Duration(seconds: 1), () {
+    _checkTimer += dt;
+    if (_checkTimer >= 1.0) {
+      _checkTimer = 0;
       checkEndGame();
-    });
+    }
     super.update(dt);
   }
 

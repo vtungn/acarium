@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 
 class WarningDialog extends StatelessWidget {
   final Acarium game;
-  const WarningDialog(
-    this.game, {
-    Key? key,
-  }) : super(key: key);
+  const WarningDialog(this.game, {super.key});
 
   @override
   Widget build(BuildContext context) {

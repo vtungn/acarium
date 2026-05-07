@@ -11,7 +11,7 @@ import 'package:flame/components.dart';
 import '../domain/index.dart';
 
 class FishComponent extends SpriteComponent
-    with HasGameRef<Acarium>, CollisionCallbacks, FishMoveMixin {
+    with HasGameReference<Acarium>, CollisionCallbacks, FishMoveMixin {
   final Fish fish;
   double dtime = 0;
   double accumulateTime = 0;

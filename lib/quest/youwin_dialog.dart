@@ -5,10 +5,7 @@ import 'package:flutter/material.dart';
 
 class YouwinDialog extends StatelessWidget {
   final Acarium game;
-  const YouwinDialog(
-    this.game, {
-    Key? key,
-  }) : super(key: key);
+  const YouwinDialog(this.game, {super.key});
 
   @override
   Widget build(BuildContext context) {

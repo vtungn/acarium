@@ -13,7 +13,7 @@ import 'package:flame_audio/flame_audio.dart';
 import '../domain/index.dart';
 import 'tank_layer.dart';
 
-class Tank extends World with HasGameRef<Acarium> {
+class Tank extends World with HasGameReference<Acarium> {
   final fish1Layer = FishLayerFar();
   final back1Layer = StaticObjFarLayer();
   final back2Layer = StaticObjNearLayer();

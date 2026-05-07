@@ -5,7 +5,7 @@ import 'package:carium/acarium_flame_game.dart';
 import 'package:flame/components.dart';
 import 'package:flame/rendering.dart';
 
-class BackgroundLayer extends Component with HasGameRef<Acarium> {
+class BackgroundLayer extends Component with HasGameReference<Acarium> {
   final String backgroundImage;
 
   BackgroundLayer(
@@ -28,7 +28,7 @@ class StaticObjNearLayer extends Component {}
 
 class FishLayerNear extends Component {}
 
-class CloseupLayer extends Component with HasGameRef<Acarium> {
+class CloseupLayer extends Component with HasGameReference<Acarium> {
   @override
   FutureOr<void> onLoad() async {
     final rnd = math.Random();
@@ -46,7 +46,7 @@ class CloseupLayer extends Component with HasGameRef<Acarium> {
   }
 }
 
-class BubbleComponent extends SpriteComponent with HasGameRef<Acarium> {
+class BubbleComponent extends SpriteComponent with HasGameReference<Acarium> {
   final double speed = 800;
   BubbleComponent({required super.position});
   @override

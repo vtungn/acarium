@@ -8,7 +8,7 @@ import 'package:flame/events.dart';
 enum CrabState { idle, move }
 
 class CrabComponent extends SpriteAnimationGroupComponent
-    with HasGameRef<Acarium>, TapCallbacks {
+    with HasGameReference<Acarium>, TapCallbacks {
   Vector2 directionVector = Vector2.zero();
   final initQuestIntro = Timer(initFirstQuest);
   @override
